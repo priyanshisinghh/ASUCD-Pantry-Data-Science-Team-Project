@@ -1,7 +1,4 @@
 import streamlit as st
 
-st.header("Pri's Findings")
-st.write("""
-Insert all your findings here in whatever way you want. 
-         Make sure you show and explain your findings in a "storytelling"ish way that someone with a non-technical background would understand. 
-""")
+st.header("Chi-Squared Testing")
+st.write(""" Is there an association between "How often patrons find what they need" and "Types of items requested" (fruits, snacks, protein)""")
