@@ -36,7 +36,6 @@ st.write(f"Chi-Squared: {chi2:.4f}  |  P-value: {p:.4f}  |  Degrees of Freedom: 
 st.subheader("Analysis")
 st.write(
     """
-- 54 volunteer responses and 298 patron responses (missing 4 patron responses).
 - Since the p-value is less than 0.05, there is a strong association between whether someone is a volunteer or patron and how they found out about the Pantry.
 """
 )
@@ -59,7 +58,6 @@ st.write(f"Correlation (ρ): {rho:.4f}  |  P-value: {pval:.4f}")
 st.subheader("Analysis")
 st.write(
     """
-- There is a weak positive correlation between satisfaction with item selection and the number of unique items grabbed.
 - Since the p-value is greater than 0.05, there is no statistically significant correlation between satisfaction of item selection and the number of unique items grabbed.
 """
 )
