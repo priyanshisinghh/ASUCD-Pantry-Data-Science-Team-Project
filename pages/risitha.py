@@ -58,7 +58,7 @@ st.code(read_script(os.path.join(_data, "clean_script.py")), language="python")
 st.markdown("---")
 
 #race analysis
-st.subheader(1: Race-Based Analysis")
+st.subheader("1: Race-Based Analysis")
 
 st.write("""
 I first examined whether race was associated with reporting limited produce availability.
