@@ -2,4 +2,4 @@ streamlit
 pandas
 scipy
 sklearn
-statsmodels.formula.api
+statsmodels
