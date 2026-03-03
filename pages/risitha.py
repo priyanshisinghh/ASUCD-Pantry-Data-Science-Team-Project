@@ -4,7 +4,7 @@ import pandas as pd
 from scipy.stats import chi2_contingency
 
 _folder = os.path.dirname(os.path.abspath(__file__))
-_data = os.path.join(_folder, "risitha_data")
+_data = os.path.join(_folder, "raw_data")
 
 def read_script(filepath):
     try:
