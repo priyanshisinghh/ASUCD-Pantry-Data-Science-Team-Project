@@ -12,7 +12,7 @@ st.header("Chi-Squared Testing")
 st.write(""" Is there an association between "How often patrons find what they need" and "Types of items requested" (fruits, snacks, protein)""")
 
 st.subheader("About the Dataset and Project")
-df = pd.read_csv('raw_data.csv')  # CHANGE THIS!
+df = pd.read_csv('raw_data.csv')
 
 #filter for patrons
 df_patrons = df[df['Are you a volunteer or a patron?'] == 'Patron'].copy()
