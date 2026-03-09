@@ -11,7 +11,7 @@ st.title("Andrew's Findings: How Shopping Experience is impacted by Satisfaction
 # loading the data and then cleaning it
 @st.cache_data
 def load_data():
-    return pd.read_csv("pantryresponses.csv")
+    return pd.read_csv("data/raw_data.csv")
 
 cleandata = load_data()
 
