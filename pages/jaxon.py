@@ -32,7 +32,7 @@ df1.columns = ['Role', 'Discovery_Method']
 #df1 = pd.read_csv(os.path.join(_data, "cleanq1data.csv"))
 st.dataframe(df1, height=400, use_container_width=True)
 
-#im gonna go ahead and remove this since we arent using this anymore but if you want to keep it in here for future projects by all means uncomment
+
 #st.subheader("Data Cleaning Script")
 #importing script without using os
 with st.expander("Show Data Cleaning Script:"):
@@ -79,15 +79,39 @@ cleaned_df['role'] = cleaned_df['role'].str.strip().str.title()
 
 # Export to CSV
 cleaned_df.to_csv('cleanq1data.csv', index=False)
-print("All clean")""", language = "python")
-    
+print("All clean")""", language = "python")  
 #st.code(read_script(os.path.join(_data, "clean.py")), language="python")
 
-st.subheader("Data Analysis Script")
-#just input your code here on its own without using os
+#st.subheader("Data Analysis Script")
 #st.code(read_script(os.path.join(_data, "PantryDiscoveryChi2.py")), language="python")
 
-st.subheader("Results")
+#mushed together this section so it makes more sense
+with st.expander("Data Analysis Script:"):
+    st.code("""
+import pandas as pd
+from scipy.stats import chi2_contingency
+df = pd.read_csv('cleanq1data.csv')
+
+# Contingency table
+contingency_table = pd.crosstab(df.iloc[:, 0], df.iloc[:, 1])
+
+print("Contingency Table")
+# transpose table (role column and method row)
+print(contingency_table.T)
+print("\n")
+
+
+# run chi-square test
+chi2, p, dof, expected = chi2_contingency(contingency_table)
+
+# print results
+print(f"Chi-Squared: {chi2}")
+print(f"P-value: {p}")
+print(f"Degrees of Freedom: {dof}")
+
+""")
+
+st.subheader("Data Analysis and Results")
 #tbl = pd.crosstab(df1.iloc[:, 0], df1.iloc[:, 1])
 #rewrote so it still works 
 tbl = pd.crosstab(df1['Role'], df1['Discovery_Method'])
@@ -128,13 +152,53 @@ df2['satisfaction_rating'] = df2['Rate your satisfaction of the item selection']
 df2 = df2[['satisfaction_rating', 'items_grabbed_ordinal']].dropna()
 st.dataframe(df2, height=400, use_container_width=True)
 
-st.subheader("Data Cleaning Script")
+#st.subheader("Data Cleaning Script")
 #st.code(read_script(os.path.join(_data, "cleanclean.py")), language="python")
+with st.expander("Show Data Cleaning Script:"):
+    st.code("""
+import pandas as pd
+df = pd.read_csv('c1pantryresponsedata.csv')
 
-st.subheader("Data Analysis Script")
+# target columns 
+satisfaction_col = 'Rate your satisfaction of the item selection'
+items_grabbed_col = 'How many unique items do you roughly grab while at the Pantry?'
+
+# Drop empty rows
+cleaned_df = df[[satisfaction_col, items_grabbed_col]].dropna().copy()
+
+# Map options to numbers
+itemmap = {
+    '1-2 different items': 1,
+    '3-5 different items': 2,
+    '6-10 different items': 3,
+    '10+ different items': 4
+}
+# rename rate you satisfaction to satisfaction_rating
+cleaned_df = cleaned_df.rename(columns={satisfaction_col: 'satisfaction_rating'})
+cleaned_df['items_grabbed_ordinal'] = cleaned_df[items_grabbed_col].map(itemmap)
+
+#Export
+cleaned_df.to_csv('cleanq2data.csv', index=False)
+print("Cleaned")""")
+
+#st.subheader("Data Analysis Script")
 #st.code(read_script(os.path.join(_data, "UniqueItemSpearman.py")), language="python")
 
-st.subheader("Results")
+st.subheader("Data Analysis and Results")
+with st.expander("Show Data Analysis Script:"):
+    st.code("""
+import pandas as pd
+from scipy.stats import spearmanr
+df = pd.read_csv('cleanq2data.csv')
+
+#run spearman correlation on cleaned data
+rho, p_value = spearmanr(df['satisfaction_rating'], df['items_grabbed_ordinal'])
+
+#print results
+print(f"Correlation Coefficient: {rho}")
+print(f"P-value: {p_value}")
+            """)
+
 rho, pval = spearmanr(df2["satisfaction_rating"], df2["items_grabbed_ordinal"])
 st.write(f"Correlation (ρ): {rho:.4f}  |  P-value: {pval:.4f}")
 
