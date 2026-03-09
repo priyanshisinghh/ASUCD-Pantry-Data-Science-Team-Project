@@ -26,6 +26,8 @@ st.write("Association between volunteer/patron roles and how they found the pant
 
 st.subheader("Data")
 #replicating what clean.py did originially 
+df['how_they_found'] = df['How did you find out about volunteering at the Pantry?'].fillna(
+    df['How did you first hear about the Pantry?'])
 df1 = df[['Are you a volunteer or a patron?', 'How did you find out about volunteering at the Pantry?']].copy()
 df1 = df1.dropna()
 df1.columns = ['Role', 'Discovery_Method']
