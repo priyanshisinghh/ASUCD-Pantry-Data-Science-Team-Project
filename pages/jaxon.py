@@ -82,10 +82,15 @@ cleaned_df.to_csv('cleanq1data.csv', index=False)
 print("All clean")""", language = "python")  
 #st.code(read_script(os.path.join(_data, "clean.py")), language="python")
 
+
+
 #st.subheader("Data Analysis Script")
 #st.code(read_script(os.path.join(_data, "PantryDiscoveryChi2.py")), language="python")
 
+
+
 #mushed together this section so it makes more sense
+st.subheader("Data Analysis and Results")
 with st.expander("Data Analysis Script:"):
     st.code("""
 import pandas as pd
@@ -110,8 +115,7 @@ print(f"P-value: {p}")
 print(f"Degrees of Freedom: {dof}")
 
 """)
-
-st.subheader("Data Analysis and Results")
+    
 #tbl = pd.crosstab(df1.iloc[:, 0], df1.iloc[:, 1])
 #rewrote so it still works 
 tbl = pd.crosstab(df1['Role'], df1['Discovery_Method'])
