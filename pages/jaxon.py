@@ -3,18 +3,17 @@ import streamlit as st
 import pandas as pd
 from scipy.stats import chi2_contingency, spearmanr
 
-'''
-# Folder next to this script
-_folder = os.path.dirname(os.path.abspath(__file__))
-_data = os.path.join(_folder, "jaxon_data")
 
-def read_script(filepath):
-    try:
-        with open(filepath, "r", encoding="utf-8") as f:
-            return f.read()
-    except Exception:
-        return ""
-'''
+#Folder next to this script
+#_folder = os.path.dirname(os.path.abspath(__file__))
+#_data = os.path.join(_folder, "jaxon_data")
+
+#def read_script(filepath):
+#    try:
+#        with open(filepath, "r", encoding="utf-8") as f:
+#            return f.read()
+#    except Exception:
+#        return ""
 
 #loading data to keep it consistent
 df = pd.read_csv("data/raw_data.csv")
