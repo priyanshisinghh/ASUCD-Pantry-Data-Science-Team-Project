@@ -147,13 +147,16 @@ st.markdown("---")
 st.subheader("Conclusion")
 
 st.write("""
-Across race, aggregated race (Asian vs Non-Asian), and ethnicity analyses,
-no statistically significant relationship was detected between demographic identity
-and reporting that produce was rarely or never available at The Pantry.
+Across race, aggregated race (Asian vs. Non-Asian), and ethnicity analyses, 
+no statistically significant relationship was detected between demographic 
+identity and reporting that produce was rarely or never available at The Pantry.
 
 This does **not** imply that there are no disparities in access to culturally relevant foods
 or that all patrons’ needs are equally met. Our survey primarily asked about general produce availability
 and was **not specifically designed to measure cultural food gaps**. 
-It’s possible that disparities exist that our questions did not capture. 
-Future surveys could explore this aspect more directly to better understand potential inequities in pantry access.
+
+Future data collection efforts could expand on these findings by incorporating questions that directly address culturally 
+specific food availability, enabling a more comprehensive evaluation of whether the pantry is 
+meeting the diverse dietary and cultural needs of its patrons.
+
 """)
