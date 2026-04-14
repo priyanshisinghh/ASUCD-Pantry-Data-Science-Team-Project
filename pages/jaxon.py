@@ -20,8 +20,6 @@ df = pd.read_csv("data/raw_data.csv")
 
 st.header("Jaxon's Findings")
 
-st.write(f"Total rows in raw_data.csv: {len(df)}")
-
 # Chi-Square ================================================================
 st.subheader("Chi-Square Test")
 st.write("Association between volunteer/patron roles and how they found the pantry.")
