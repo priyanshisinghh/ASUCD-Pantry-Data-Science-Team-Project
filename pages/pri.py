@@ -19,3 +19,6 @@ df_patrons = df[df['Are you a volunteer or a patron?'] == 'Patron'].copy()
 print(f"Patron responses: {len(df_patrons)}")
 
 df_patrons
+
+df = pd.read_csv("data/raw_data.csv")
+st.write(list(df.columns))
