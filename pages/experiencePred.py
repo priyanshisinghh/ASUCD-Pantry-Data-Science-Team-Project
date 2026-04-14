@@ -189,12 +189,6 @@ st.markdown("---")
 
 st.subheader("Conclusion")
 st.write("""
-This model brings together insights from all four analyses:
-
-- **Satisfaction with item selection** (Pri & Andrew) is the strongest predictor
-- **Produce availability** (Risitha) adds meaningful signal  
-- **Demographics** (Andrew) have minimal impact — the Pantry serves all groups consistently
-
 The takeaway: if the Pantry improves its item selection and produce availability, 
 overall experience scores are likely to follow.
 """)
