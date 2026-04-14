@@ -1,8 +1,8 @@
-pandas
-plotly
 streamlit
-yfinance
-pandas-datareader
-prophet
-scipy.stats
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
 statsmodels
+scipy
