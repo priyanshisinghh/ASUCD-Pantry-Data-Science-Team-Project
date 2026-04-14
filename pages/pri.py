@@ -75,3 +75,7 @@ request specific item types (fruits, snacks, or protein).
 Results above show whether unmet produce needs are tied to specific item preferences,
 which could help the Pantry prioritize what to stock.
 """)
+
+df = pd.read_csv("data/raw_data.csv")
+df_patrons = df[df['Are you a volunteer or a patron?'] == 'Patron'].copy()
+st.write(df_patrons['What types of items would you like to see more of at the Pantry?'].dropna().unique().tolist())
