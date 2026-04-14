@@ -5,8 +5,6 @@ from scipy.stats import chi2_contingency
 
 #not using since we are not using os anything
 '''
-#_folder = os.path.dirname(os.path.abspath(__file__))
-#_data = os.path.join(_folder, "risitha_data")
 
 def read_script(filepath):
     try:
