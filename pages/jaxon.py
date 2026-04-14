@@ -15,12 +15,12 @@ from scipy.stats import chi2_contingency, spearmanr
 #    except Exception:
 #        return ""
 
-st.write(f"Total rows in raw_data.csv: {len(df)}")
-
 #loading data to keep it consistent
 df = pd.read_csv("data/raw_data.csv")
 
 st.header("Jaxon's Findings")
+
+st.write(f"Total rows in raw_data.csv: {len(df)}")
 
 # Chi-Square ================================================================
 st.subheader("Chi-Square Test")
