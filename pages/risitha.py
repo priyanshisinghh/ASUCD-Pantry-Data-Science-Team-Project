@@ -1,8 +1,10 @@
-import os
+#import os - removed since we are not using os
 import streamlit as st
 import pandas as pd
 from scipy.stats import chi2_contingency
 
+#not using since we are not using os anything
+'''
 _folder = os.path.dirname(os.path.abspath(__file__))
 _data = os.path.join(_folder, "risitha_data")
 
@@ -12,6 +14,7 @@ def read_script(filepath):
             return f.read()
     except:
         return ""
+'''
 
 st.header("Risitha's Findings")
 
@@ -24,7 +27,7 @@ they **rarely or never find the produce they need** at the Pantry?
 st.markdown("---")
 
 #clean data
-df = pd.read_csv(os.path.join(_data, "pantry_survey.csv"))
+df = pd.read_csv("data/raw_data.csv")
 
 df_patrons = df[df['Are you a volunteer or a patron?'] == 'Patron'].copy()
 
@@ -52,9 +55,25 @@ df_clean['asian_label'] = df_clean['asian'].map({
 st.subheader("Cleaned Dataset")
 st.dataframe(df_clean[['race','ethnicity','produce_availability','rare_never']])
 
-st.subheader("Cleaning Script")
-st.code(read_script(os.path.join(_data, "clean_script.py")), language="python")
+#added this here so the code is expandable if you want - making more user friendly
+with st.expander("Cleaning Script"):
+    st.code("""
+    df = pd.read_csv("data/raw_data.csv")
+df_patrons = df[df['Are you a volunteer or a patron?'] == 'Patron'].copy()
+df_patrons = df_patrons.rename(columns={
+    'What is your ethnicity?': 'ethnicity',
+    'What is your race? [Choose all that apply]': 'race',
+    'How often do you find the produce you need? ': 'produce_availability'
+})
+df_clean = df_patrons.dropna(subset=['produce_availability']).copy()
+df_clean['rare_never'] = df_clean['produce_availability'].apply(
+    lambda x: 1 if str(x).strip() in ['Rarely', 'Never'] else 0
+)
+df_clean['asian'] = df_clean['race'].apply(lambda x: 1 if 'Asian' in str(x) else 0)
+df_clean['asian_label'] = df_clean['asian'].map({1: 'Asian', 0: 'Non-Asian'})
+    """, language="python")
 
+#st.code(read_script(os.path.join(_data, "clean_script.py")), language="python")
 st.markdown("---")
 
 #race analysis
