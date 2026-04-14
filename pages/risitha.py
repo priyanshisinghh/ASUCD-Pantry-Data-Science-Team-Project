@@ -3,9 +3,12 @@ import streamlit as st
 import pandas as pd
 from scipy.stats import chi2_contingency
 
+st.header("Risitha's Findings")
+
 #not using since we are not using os anything
 '''
-
+_folder = os.path.dirname(os.path.abspath(__file__))
+_data = os.path.join(_folder, "risitha_data")
 def read_script(filepath):
     try:
         with open(filepath, "r", encoding="utf-8") as f:
@@ -13,8 +16,6 @@ def read_script(filepath):
     except:
         return ""
 '''
-
-st.header("Risitha's Findings")
 
 st.write("""
 ### Research Question
