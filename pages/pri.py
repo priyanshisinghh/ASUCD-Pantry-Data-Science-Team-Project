@@ -1,21 +1,77 @@
-import pandas as pd
-import numpy as np
-from scipy.stats import chi2_contingency
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import r2_score, mean_squared_error
-import matplotlib.pyplot as plt
-import seaborn as sns
 import streamlit as st
+import pandas as pd
+from scipy.stats import chi2_contingency
 
-st.header("Chi-Squared Testing")
-st.write(""" Is there an association between "How often patrons find what they need" and "Types of items requested" (fruits, snacks, protein)""")
+st.header("Pri's Findings")
 
-st.subheader("About the Dataset and Project")
-df = pd.read_csv('raw_data.csv')  # CHANGE THIS!
+st.write("""
+### Research Question
+Is there an association between **how often patrons find the produce they need** and 
+**what types of items they want more of** (fruits, snacks, protein)?
+""")
 
-#filter for patrons
+st.markdown("---")
+
+# --- Load & clean inline ---
+df = pd.read_csv("data/raw_data.csv")
+
 df_patrons = df[df['Are you a volunteer or a patron?'] == 'Patron'].copy()
-print(f"Patron responses: {len(df_patrons)}")
 
-df_patrons
+availability_col = 'How often do you find the produce you need? '
+items_col = 'What types of items would you like to see more of at the Pantry?'
+
+df_clean = df_patrons[[availability_col, items_col]].dropna().copy()
+df_clean.columns = ['availability', 'items_requested']
+
+# Binary flags for each item type
+df_clean['wants_fruit']   = df_clean['items_requested'].apply(lambda x: 1 if 'fruit' in str(x).lower() else 0)
+df_clean['wants_snacks']  = df_clean['items_requested'].apply(lambda x: 1 if 'snack' in str(x).lower() else 0)
+df_clean['wants_protein'] = df_clean['items_requested'].apply(lambda x: 1 if 'protein' in str(x).lower() else 0)
+
+st.subheader("Cleaned Dataset")
+st.dataframe(df_clean)
+
+with st.expander("Show Cleaning Script"):
+    st.code("""
+df = pd.read_csv("data/raw_data.csv")
+df_patrons = df[df['Are you a volunteer or a patron?'] == 'Patron'].copy()
+
+availability_col = 'How often do you find the produce you need? '
+items_col = 'What types of items would you like to see more of at the Pantry?'
+
+df_clean = df_patrons[[availability_col, items_col]].dropna().copy()
+df_clean.columns = ['availability', 'items_requested']
+
+df_clean['wants_fruit']   = df_clean['items_requested'].apply(lambda x: 1 if 'fruit' in str(x).lower() else 0)
+df_clean['wants_snacks']  = df_clean['items_requested'].apply(lambda x: 1 if 'snack' in str(x).lower() else 0)
+df_clean['wants_protein'] = df_clean['items_requested'].apply(lambda x: 1 if 'protein' in str(x).lower() else 0)
+    """, language="python")
+
+st.markdown("---")
+
+# --- Chi-Square for each item type ---
+for item_label, item_col in [('Fruits', 'wants_fruit'), ('Snacks', 'wants_snacks'), ('Protein', 'wants_protein')]:
+    st.subheader(f"Chi-Square: Produce Availability vs. Wanting More {item_label}")
+
+    tbl = pd.crosstab(df_clean['availability'], df_clean[item_col])
+    tbl.columns = [f'Does not request {item_label}', f'Requests {item_label}']
+    st.dataframe(tbl)
+
+    chi2, p, dof, _ = chi2_contingency(tbl)
+    st.write(f"Chi-Squared: {chi2:.4f} | P-value: {p:.4f} | Degrees of Freedom: {dof}")
+
+    if p < 0.05:
+        st.write(f"✅ Significant association between produce availability and wanting more {item_label} (p < 0.05).")
+    else:
+        st.write(f"No statistically significant association between produce availability and wanting more {item_label} (p ≥ 0.05).")
+
+    st.markdown("---")
+
+st.subheader("Conclusion")
+st.write("""
+This analysis tested whether patrons who struggle to find produce are more likely to 
+request specific item types (fruits, snacks, or protein).
+
+Results above show whether unmet produce needs are tied to specific item preferences,
+which could help the Pantry prioritize what to stock.
+""")

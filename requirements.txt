@@ -1,8 +1,8 @@
 streamlit
 pandas
-scipy
+numpy
 scikit-learn
-statsmodels
 matplotlib
 seaborn
-numpy
+statsmodels
+scipy
