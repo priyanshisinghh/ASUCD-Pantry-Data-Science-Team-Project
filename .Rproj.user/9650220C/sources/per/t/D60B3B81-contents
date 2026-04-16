@@ -1,0 +1,156 @@
+---
+title: "ASUCD Pantry"
+output: html_notebook
+date: "2026-02-09"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+install.packages("dplyr")
+library(dplyr)
+library(readr)
+dataset <- read.csv("pantryresponses.csv")
+str(dataset)
+
+#filtering out the volunteers from the results 
+cleandata <- dataset %>%
+  filter(Are.you.a.volunteer.or.a.patron. == "Patron")
+
+#making it easier for me to code instead of writing out the original column names
+colnames(cleandata)[colnames(cleandata) == "Rate.the.overall.shopping.experience..ease.welcoming.experience."] <- "Experience"
+colnames(cleandata)[colnames(cleandata) == "Rate.your.satisfaction.of.the.item.selection"] <- "Satisfaction"
+colnames(cleandata)[colnames(cleandata) == "What.is.your.gender."] <- "Gender"
+colnames(cleandata)[colnames(cleandata) == "What.college.are.you."] <- "College"
+
+#filtering out all the columns we don't want and keep the 4 we wanted to test the LR on 
+modeldata <- cleandata %>%
+  select(Experience, Satisfaction, Gender, College)
+
+#just building the model 
+modeldata$Experience <- as.numeric(modeldata$Experience)
+modeldata$Satisfaction <- as.numeric(modeldata$Satisfaction)
+modeldata$Gender <- as.factor(modeldata$Gender)
+modeldata$College <- as.factor(modeldata$College)
+modeldata <- na.omit(modeldata)
+str(modeldata)
+
+
+model <- lm(Experience ~ Gender + College + Satisfaction, data = modeldata)
+summary(model)
+
+mydata <- modeldata
+head(mydata)
+summary(mydata)
+
+
+
+```
+```{r}
+
+library(ggplot2)
+ggplot(modeldata, aes(x = Satisfaction, y = Experience)) +
+  
+  #adding each response (with jitter)
+  geom_jitter(width = 0.2, height = 0.2, alpha = 0.6, color = "darkblue") +
+  
+  #adding the line 
+  geom_smooth(method = "lm", color = "red", fill = "grey") +
+  
+  labs(title = "Effect of Item Satisfaction on Shopping Experience",
+       subtitle = "Red line = Linear Model Prediction",
+       x = "Satisfaction with Items (1-5)",
+       y = "Overall Shopping Experience (1-5)") +
+  
+  theme_minimal()
+```
+```{r}
+library(ggplot2)
+
+ggplot(modeldata, aes(x = Satisfaction, y = Experience, color = Gender)) +
+  #added each result (used jitter so its not all on top of each other)
+  geom_jitter(width = 0.2, height = 0.2, alpha = 0.6) +
+  
+  #added a trend line for each gender 
+  geom_smooth(method = "lm", se = FALSE) +
+  
+  #split each one into what college the respondent said 
+  facet_wrap(~College) +
+  
+  labs(title = "Shopping Experience: Analyzing All 3 Variables",
+       subtitle = "Panels: College | Color: Gender | X-axis: Satisfaction",
+       x = "Satisfaction (1-5)",
+       y = "Experience (1-5)") +
+  
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+```{r}
+#This is just a scatterplot showing Gender and Experience (didn't really affect experience as much as Satisfaction)
+library(ggplot2)
+ggplot(modeldata, aes(x = Gender, y = Experience)) +
+  
+  #adding each response (same as before)
+  geom_jitter(width = 0.2, height = 0.2, alpha = 0.6, color = "darkblue") +
+  
+  labs(title = "Gender and Experience",
+       x = "Gender",
+       y = "Overall Shopping Experience (1-5)") +
+  
+  theme_minimal()
+```
+```{r} 
+#This one is basically just a scatterplot (College didn't really matter for overall Experience)
+library(ggplot2)
+ggplot(modeldata, aes(x = College, y = Experience)) +
+  
+  geom_jitter(width = 0.2, height = 0.2, alpha = 0.6, color = "darkblue") +
+  
+  labs(title = "College and Experience",
+       x = "College",
+       y = "Overall Shopping Experience (1-5)") +
+  
+  theme_minimal()
+```
+```{r}
+#Setting up the models to test MLR
+ m1_my <- lm(Experience ~ Satisfaction, data = mydata)
+ m2_my <- lm(Experience ~ Satisfaction + Gender, data = mydata)
+ m3_my <- lm(Experience ~ Satisfaction + Gender + College, data = mydata)
+ #Comparing the models to see which is best for the data
+  model_comparison_my <- data.frame(
+   Model = c("m1", "m2", "m3"),
+   p = c(1, 2, 3),
+   R2 = c(summary(m1_my)$r.squared,
+         summary(m2_my)$r.squared,
+          summary(m3_my)$r.squared),
+   Adj_R2 = c(summary(m1_my)$adj.r.squared,
+             summary(m2_my)$adj.r.squared,
+              summary(m3_my)$adj.r.squared)
+ )
+ model_comparison_my
+ 
+ #We found the best model is the first one (m1) so setting up an anova test and a full F-test for that. 
+  best_my <- m1_my  
+ anova(best_my)
+ #Using that, we setup a partial F test for the data to compare and see if adding variables makes the model perform better
+  reduced_my <- lm(Satisfaction ~ Experience + Gender, data = mydata)
+ full_my    <- lm(Satisfaction ~ Experience + Gender + College, data = mydata)
+ anova(reduced_my, full_my)
+```
+
+
+Main Key points:
+
+Gender and College didn't really matter in this model, Satisfaction is really the only thing that mattered. (can look at p-values, the gender and college ones are pretty large while the satisfaction one is tiny) This makes sense and we can say that Satisfaction is the only thing that matters when determining the overall shopping experience, what you study and what gender you are doesn't matter. 
+
+Satisfaction regression line: y = 2.60 + 0.45x. 
+
+The R squared stat tells us that this model explains about 27.5% of the variance. Can lead us to ask what are the unexplained outcomes that contributed to the other 72.5%?
+
+Can see in each of the graphs, each college is represented then further split up by gender using colors. Bit of a confusion point: The slopes are all different visually but it doesn't really matter, in the end gender and college didn't matter when trying to find the experience of a patron at the Pantry. 
+
+More females than males, mostly CAES and L&S students (reflecting the overall population of the college)

@@ -11,7 +11,7 @@ st.markdown("""
     <style>
     /* Soft gradient background */
     .stApp {
-        background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        background: linear-gradient(135deg, #d4b896 0%, #c4a882 100%);
     }
     /* Clean up the block containers */
     .block-container {
@@ -55,23 +55,23 @@ m3 = smf.ols('Experience ~ Satisfaction + C(Gender) + C(College)', data=modeldat
 #layout of streamlit
 
 st.title("How Shopping Experience is Impacted by Satisfaction, Gender, and Major")
-st.write("*An Analysis of ASUCD Pantry Patron Data*")
+st.write("*Our analysis of the ASUCD Pantry Patron Data*")
 st.divider()
 
 #main idea
-st.header("The Main Takeaway")
+st.header("Main Finding")
 st.success("**Satisfaction with the items provided is the only significant factor in determining a patron's overall shopping experience.**")
 
 st.markdown("""
-When we look at the data, the demographics of our patrons, specifically what they study and how they identify their own gender, we see that this doesn't negatively or positively impact how welcoming they find The Pantry. 
+When we look at the data, we can see the demographics of our patrons, what they study and how they identify their own gender. This doesn't negatively or positively impact how welcoming they find The Pantry. 
 
-The Pantry's environment is consistently welcoming across different student populations, which is a great thing! If we want to elevate the overall shopping experience, our primary operational focus should be to improve the items we stock.
+The Pantry's environment is consistently welcoming across different student populations, which is a great thing! If we want to elevate the overall shopping experience, our main focus should be to improve the items we stock.
 """)
 
 st.divider()
 
 #prediction tool 
-st.header("Test the Model: Predict the Experience")
+st.header("Test your own experience with our model!")
 st.write("We built a predictive machine learning model based on the survey data. You can change the metrics below to see how they impact the predicted overall shopping experience.")
 
 with st.form("prediction_form"):
@@ -85,7 +85,7 @@ with st.form("prediction_form"):
     with col3:
         user_college = st.selectbox("Patron College", modeldata['College'].unique())
         
-    submitted = st.form_submit_button("Predict Shopping Experience")
+    submitted = st.form_submit_button("Predict the Overall Shopping Experience!")
 
 if submitted:
     #creates a dataframe with whatever the person inputs
@@ -121,8 +121,11 @@ with col_text:
 with col_plot:
     fig, ax = plt.subplots(figsize=(6, 4))
     #made background transparent 
-    fig.patch.set_facecolor('none')
-    ax.set_facecolor('none')
+    fig.patch.set_facecolor('white')
+    ax.set_facecolor('white')
+    ax.tick_params(colors='black')
+    ax.xaxis.label.set_color('black')
+    ax.yaxis.label.set_color('black')
     
     sns.regplot(
         data=modeldata, 
@@ -142,7 +145,7 @@ with col_plot:
 st.divider()
 
 #model comparison and anova testing 
-with st.expander("📊 View the Statistical Validation (For the Data Nerds)"):
+with st.expander("The Model Comparisons and ANOVA Tests"):
     st.markdown("""
     Our base model explains about **27.5%** of the variance in the shopping experience. Notice that when we add Gender and College to the model, the Adjusted R-Squared actually *drops*. This mathematically proves that those demographic variables are just adding noise, not predictive value.
     
@@ -175,9 +178,10 @@ with st.expander("📊 View the Statistical Validation (For the Data Nerds)"):
         aspect=1.2
     )
     #making the faceted grid transparent
-    g.fig.patch.set_facecolor('none')
+    g.fig.patch.set_facecolor('white')
     for ax in g.axes.flatten():
-        ax.set_facecolor('none')
+        ax.set_facecolor('white')
+        ax.tick_params(colors='black')
         
     g.fig.subplots_adjust(top=0.9)
     g.fig.suptitle("Panels: College | Color: Gender | X-axis: Satisfaction")
