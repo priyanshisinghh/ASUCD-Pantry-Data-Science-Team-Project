@@ -89,7 +89,7 @@ elif analysis_type == "Asian vs Non-Asian":
 else:
     group_col = 'ethnicity_label'
 
-df_analysis = df_filtered[df_filtered[group_col].notna()].copy()
+df_analysis = df_clean[df_clean[group_col].notna()].copy()
 
 
 
