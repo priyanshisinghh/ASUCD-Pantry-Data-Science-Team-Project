@@ -180,12 +180,12 @@ st.subheader("Interpretation")
 if p < 0.05:
     st.error("""
 Based on the visualization and chi-square p-value result being < 0.5, 
-there exists a relationship between the selected group and difficulty finding produce.
+there exists a significant relationship between the selected group and difficulty finding produce.
 """)
 else:
     st.success("""
 Based on the visualization and chi-square p-value result being > 0.5, 
-there exists a relationship between the selected group and difficulty finding produce.
+there is no significant relationship between the selected group and difficulty finding produce.
 
 """)
 
