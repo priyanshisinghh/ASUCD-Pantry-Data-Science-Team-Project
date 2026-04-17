@@ -24,14 +24,24 @@ section.main > div {
 }
 
 
+section.main p, 
+section.main li, 
+section.main label {
+    color: #2c3e50 !important;
+}
+
 /* Headings */
 h1, h2, h3 {
+    color: #1f2d3d !important;
+}
+
+/* Keep dropdown readable */
+[data-testid="stSelectbox"] div {
     color: black !important;
 }
 
-/* Paragraphs */
-p, div, span {
-    color: black !important;
+code {
+    color: inherit !important;
 }
 
 
