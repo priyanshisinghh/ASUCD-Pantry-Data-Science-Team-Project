@@ -81,17 +81,6 @@ analysis_type = st.selectbox(
     ["Race", "Asian vs. Non-Asian", "Ethnicity (Hispanic vs. Non-Hispanic)"]
 )
 
-# filters (sidebar)
-st.sidebar.header("Filters")
-
-selected_responses = st.sidebar.multiselect(
-    "Filter Produce Availability:",
-    df_clean['produce_availability'].unique(),
-    default=df_clean['produce_availability'].unique()
-)
-
-df_filtered = df_clean[df_clean['produce_availability'].isin(selected_responses)]
-
 # determining group
 if analysis_type == "Race":
     group_col = 'race'
