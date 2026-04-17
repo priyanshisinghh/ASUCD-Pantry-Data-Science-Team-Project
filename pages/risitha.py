@@ -8,7 +8,7 @@ st.markdown("""
 <style>
 /* Main app background image */
 [data-testid="stAppViewContainer"] {
-    background-image: url("https://marketplace.canva.com/EAGEncMdbEM/1/0/800w/canva-beige-brown-simple-abstract-desktop-wallpaper-CXU92iPwMAI.jpg");
+    background-image: url("https://i.pinimg.com/originals/65/4f/9a/654f9a4bfd715b2537a2b9e1e4220c0d.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -37,10 +37,7 @@ p, div, span, label {
     color: black !important;
 }
 
-/* Streamlit widgets (dropdown, etc.) */
-[data-testid="stSelectbox"] * {
-    color: black !important;
-}
+
 </style>
 """, unsafe_allow_html=True)
 
