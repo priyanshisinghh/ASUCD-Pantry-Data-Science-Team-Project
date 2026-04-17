@@ -8,7 +8,7 @@ st.markdown("""
 <style>
 /* Main app background image */
 [data-testid="stAppViewContainer"] {
-    background-image: url("https://static.vecteezy.com/system/resources/previews/016/178/694/non_2x/fruit-seamless-pattern-with-whole-and-sliced-oranges-on-a-beige-background-free-vector.jpg");
+    background-image: url("https://static.vecteezy.com/system/resources/previews/002/579/740/non_2x/fresh-fruits-background-free-vector.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -29,7 +29,7 @@ h1, h2, h3 {
 """, unsafe_allow_html=True)
 
 # title
-st.title("Is There a Relationship Between Student Demographics and the Frequency of Finding Produce at The Pantry?")
+st.title("Student Demographics and the Frequency of Finding Produce at The Pantry?")
 st.write("""
 Access to fresh food is essential for student health and well-being. At The Pantry, students rely on available produce to meet their nutritional needs.
 
