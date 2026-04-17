@@ -3,19 +3,34 @@ import streamlit as st
 import pandas as pd
 from scipy.stats import chi2_contingency
 
-st.header("Risitha's Findings")
+st.markdown("""
+<style>
+body {
+    background-color: #f7f9fc;
+}
+h1, h2, h3 {
+    color: #2c3e50;
+}
+</style>
+""", unsafe_allow_html=True)
 
-#not using since we are not using os anything
+# title
+st.title("Is There a Relationship Between Student Demographics and the Frequency of Finding Fresh Produce at The Pantry?")
+st.write("""
+Access to fresh food is essential for student health and well-being.  
+At The Pantry, students rely on available produce to meet their nutritional needs.
 
-#_folder = os.path.dirname(os.path.abspath(__file__))
-#_data = os.path.join(_folder, "risitha_data")
-#def read_script(filepath):
-#    try:
-#        with open(filepath, "r", encoding="utf-8") as f:
-#            return f.read()
-#    except:
-#        return ""
+But an important question that we want to analyze:
 
+**Do all students have the same experience finding the produce they need?**
+""")
+
+
+st.divider()
+
+
+
+st.subheader("Research Question")
 
 st.write("""
 ### Research Question
@@ -54,6 +69,38 @@ df_clean['asian_label'] = df_clean['asian'].map({
 st.subheader("Cleaned Dataset")
 st.dataframe(df_clean[['race','ethnicity','produce_availability','rare_never']])
 
+# user selection
+st.markdown("---")
+st.subheader("Interactive Analysis")
+
+analysis_type = st.selectbox(
+    "Choose a demographic grouping:",
+    ["Race", "Asian vs. Non-Asian", "Ethnicity (Hispanic vs. Non-Hispanic)"]
+)
+
+# filters (sidebar)
+st.sidebar.header("Filters")
+
+selected_responses = st.sidebar.multiselect(
+    "Filter Produce Availability:",
+    df_clean['produce_availability'].unique(),
+    default=df_clean['produce_availability'].unique()
+)
+
+df_filtered = df_clean[df_clean['produce_availability'].isin(selected_responses)]
+
+# determining group
+if analysis_type == "Race":
+    group_col = 'race'
+elif analysis_type == "Asian vs Non-Asian":
+    group_col = 'asian_label'
+else:
+    group_col = 'ethnicity_label'
+
+df_analysis = df_filtered[df_filtered[group_col].notna()].copy()
+
+
+
 #added this here so the code is expandable if you want - making more user friendly
 with st.expander("Cleaning Script"):
     st.code("""
@@ -72,13 +119,15 @@ df_clean['asian'] = df_clean['race'].apply(lambda x: 1 if 'Asian' in str(x) else
 df_clean['asian_label'] = df_clean['asian'].map({1: 'Asian', 0: 'Non-Asian'})
     """, language="python")
 
-#st.code(read_script(os.path.join(_data, "clean_script.py")), language="python")
+
+
+
 
 #race analysis
-st.subheader("1: Race-Based Analysis")
+st.subheader("Race-Based Analysis")
 
 st.write("""
-I first examined whether race was associated with reporting limited produce availability.
+Examining whether race is associated with reporting limited produce availability.
 """)
 
 race_table = pd.crosstab(df_clean['race'], df_clean['rare_never'])
