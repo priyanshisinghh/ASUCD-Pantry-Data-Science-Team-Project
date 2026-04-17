@@ -116,7 +116,7 @@ def highlight_small(val):
     return "background-color: #ffcccc" if val < 5 else ""
 
 st.subheader("Expected Counts (highlighted if < 5)")
-st.dataframe(expected_df.style.applymap(highlight_small))
+st.write(expected_df.style.applymap(highlight_small))
 
 # assumption check
 if (expected_df < 5).any().any():
