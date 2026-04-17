@@ -23,9 +23,23 @@ section.main > div {
     margin: auto;
 }
 
-/* Optional text styling */
+html, body, [class*="css"]  {
+    color: black !important;
+}
+
+/* Headings */
 h1, h2, h3 {
-    color: #2c3e50;
+    color: black !important;
+}
+
+/* Paragraphs + labels */
+p, div, span, label {
+    color: black !important;
+}
+
+/* Streamlit widgets (dropdown, etc.) */
+[data-testid="stSelectbox"] * {
+    color: black !important;
 }
 </style>
 """, unsafe_allow_html=True)
