@@ -8,7 +8,7 @@ st.markdown("""
 <style>
 /* Main app background */
 [data-testid="stAppViewContainer"] {
-    background-color: #f7f9fc;
+    background-color: #e4d5b4;
 }
 
 /* Text styling */
