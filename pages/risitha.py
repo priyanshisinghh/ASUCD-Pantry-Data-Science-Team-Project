@@ -20,8 +20,7 @@ st.write("""
 Access to fresh food is essential for student health and well-being.  
 At The Pantry, students rely on available produce to meet their nutritional needs.
 
-But an important question that we want to analyze:
-
+But an important question that we want to analyze is:
 **Do all students have the same experience finding the produce they need?**
 """)
 
@@ -33,7 +32,6 @@ st.divider()
 st.subheader("Research Question")
 
 st.write("""
-### Research Question
 Is there a significant relationship between student race/ethnicity and the likelihood that they report
 they **rarely or never find the produce they need** at the Pantry?
 """)
@@ -65,6 +63,11 @@ df_clean['asian_label'] = df_clean['asian'].map({
     1: 'Asian',
     0: 'Non-Asian'
 })
+
+df_clean['ethnicity_label'] = df_clean['ethnicity'].apply(
+    lambda x: 'Hispanic' if 'Hispanic' in str(x) else 'Non-Hispanic'
+)
+
 
 st.subheader("Cleaned Dataset")
 st.dataframe(df_clean[['race','ethnicity','produce_availability','rare_never']])
@@ -101,113 +104,65 @@ df_analysis = df_filtered[df_filtered[group_col].notna()].copy()
 
 
 
-#added this here so the code is expandable if you want - making more user friendly
-with st.expander("Cleaning Script"):
-    st.code("""
-    df = pd.read_csv("data/raw_data.csv")
-df_patrons = df[df['Are you a volunteer or a patron?'] == 'Patron'].copy()
-df_patrons = df_patrons.rename(columns={
-    'What is your ethnicity?': 'ethnicity',
-    'What is your race? [Choose all that apply]': 'race',
-    'How often do you find the produce you need? ': 'produce_availability'
-})
-df_clean = df_patrons.dropna(subset=['produce_availability']).copy()
-df_clean['rare_never'] = df_clean['produce_availability'].apply(
-    lambda x: 1 if str(x).strip() in ['Rarely', 'Never'] else 0
-)
-df_clean['asian'] = df_clean['race'].apply(lambda x: 1 if 'Asian' in str(x) else 0)
-df_clean['asian_label'] = df_clean['asian'].map({1: 'Asian', 0: 'Non-Asian'})
-    """, language="python")
+# CONTINGENCY TABLE
+table = pd.crosstab(df_analysis[group_col], df_analysis['rare_never'])
+table.columns = ['Sometimes/Always', 'Rarely/Never']
+
+chi2, p, dof, expected = chi2_contingency(table)
+
+st.write("### Contingency Table")
+st.dataframe(table)
 
 
+# RESULTS
+st.write(f"Chi-Square: {chi2:.4f}")
+st.write(f"P-value: {p:.4f}")
+st.write(f"Degrees of Freedom: {dof}")
 
 
+# EXPECTED COUNTS + HIGHLIGHT
+expected_df = pd.DataFrame(expected, index=table.index, columns=table.columns)
 
-#race analysis
-st.subheader("Race-Based Analysis")
+def highlight_small(val):
+    return "background-color: #ffcccc" if val < 5 else ""
 
-st.write("""
-Examining whether race is associated with reporting limited produce availability.
+st.subheader("Expected Counts (highlighted if < 5)")
+st.dataframe(expected_df.style.applymap(highlight_small))
+
+# assumption check
+if (expected_df < 5).any().any():
+    st.warning("Some expected counts are below 5 → Chi-square assumptions may be violated.")
+else:
+    st.success("All expected counts ≥ 5 → Chi-square assumptions satisfied.")
+
+
+# VISUALIZATION
+st.subheader("Visualization")
+st.bar_chart(table)
+
+
+# INTERPRETATION (DYNAMIC)
+st.subheader("Interpretation")
+
+if p < 0.05:
+    st.error("""
+There is a statistically significant relationship between the selected demographic group
+and difficulty finding produce.
+""")
+else:
+    st.success("""
+No statistically significant relationship was detected between the selected demographic group
+and difficulty finding produce.
 """)
 
-race_table = pd.crosstab(df_clean['race'], df_clean['rare_never'])
-race_table.columns = ['Sometimes/Always', 'Rarely/Never']
-
-chi2_race, p_race, dof_race, expected_race = chi2_contingency(race_table)
-
-st.write("Contingency Table")
-st.dataframe(race_table)
-
-st.write(f"Chi-Square: {chi2_race:.4f}")
-st.write(f"P-value: {p_race:.4f}")
-st.write(f"Degrees of Freedom: {dof_race}")
-
-expected_race_df = pd.DataFrame(expected_race,
-                                index=race_table.index,
-                                columns=race_table.columns)
-
-st.subheader("Expected Counts")
-st.dataframe(expected_race_df)
-
 st.write("""
-Although this test addresses the research question directly,
-several expected cell counts are small due to many race categories.
+This does not necessarily mean disparities do not exist.  
+This analysis focuses on general produce availability and may not capture culturally specific food needs.
 
-This violates chi-square assumptions, making this result less reliable.
+Future surveys could better address this by asking directly about culturally relevant foods.
 """)
 
-st.markdown("---")
 
-#asian vs nonasian
-st.subheader("2: Asian vs Non-Asian")
-
-st.write("""
-To improve statistical validity, I grouped respondents into Asian vs. Non-Asian to test groups that are bigger in the data.
-""")
-
-asian_table = pd.crosstab(df_clean['asian_label'], df_clean['rare_never'])
-asian_table.columns = ['Sometimes/Always', 'Rarely/Never']
-
-chi2_asian, p_asian, dof_asian, expected_asian = chi2_contingency(asian_table)
-
-st.write("Contingency Table")
-st.dataframe(asian_table)
-
-st.write(f"Chi-Square: {chi2_asian:.4f}")
-st.write(f"P-value: {p_asian:.4f}")
-st.write(f"Degrees of Freedom: {dof_asian}")
-
-st.write("""
-This grouping satisfied expected count assumptions because they were all greater than 5.
-The result showed **no statistically significant relationship** between Asian identity
-and reporting difficulty finding produce.
-""")
-
-st.markdown("---")
-
-#ethnicity
-st.subheader("3: Ethnicity Analysis")
-
-df_eth = df_clean[df_clean['ethnicity'].notna()].copy()
-
-eth_table = pd.crosstab(df_eth['ethnicity'], df_eth['rare_never'])
-eth_table.columns = ['Sometimes/Always', 'Rarely/Never']
-
-chi2_eth, p_eth, dof_eth, expected_eth = chi2_contingency(eth_table)
-
-st.write("Contingency Table")
-st.dataframe(eth_table)
-
-st.write(f"Chi-Square: {chi2_eth:.4f}")
-st.write(f"P-value: {p_eth:.4f}")
-st.write(f"Degrees of Freedom: {dof_eth}")
-
-st.write("""
-Ethnicity also showed **no statistically significant relationship**
-with reporting limited produce availability.
-""")
-
-st.markdown("---")
 
 #conclude
 st.subheader("Conclusion")
