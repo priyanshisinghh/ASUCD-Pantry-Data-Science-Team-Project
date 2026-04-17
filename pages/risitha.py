@@ -34,7 +34,7 @@ section.main label {
 
 /* Dropdown LABEL (the text above box) */
 label {
-    color: white !important;
+    color: black !important;
 }
 
 /* Dropdown SELECTED VALUE (inside the box) */
