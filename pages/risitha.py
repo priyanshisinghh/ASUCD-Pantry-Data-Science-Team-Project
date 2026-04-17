@@ -8,7 +8,7 @@ st.markdown("""
 <style>
 /* Main app background image */
 [data-testid="stAppViewContainer"] {
-    background-image: url("https://c4.wallpaperflare.com/wallpaper/738/665/100/simple-minimalism-food-fruit-colorful-hd-wallpaper-preview.jpg");
+    background-image: url("https://marketplace.canva.com/EAGEncMdbEM/1/0/800w/canva-beige-brown-simple-abstract-desktop-wallpaper-CXU92iPwMAI.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
