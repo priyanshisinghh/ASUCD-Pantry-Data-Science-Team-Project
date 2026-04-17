@@ -8,7 +8,7 @@ st.markdown("""
 <style>
 /* Main app background image */
 [data-testid="stAppViewContainer"] {
-    background-image: url("https://static.vecteezy.com/system/resources/previews/002/579/740/non_2x/fresh-fruits-background-free-vector.jpg");
+    background-image: url("https://t3.ftcdn.net/jpg/16/55/96/82/360_F_1655968224_AeJb22UjHjLUPFzIIAzBk23JiSx5xbsN.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
