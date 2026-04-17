@@ -1,28 +1,66 @@
-#import os
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 from scipy.stats import chi2_contingency, spearmanr
 
+st.set_page_config(page_title="ASUCD Pantry Outreach and Inventory Satisfaction Analysis", layout="wide")
 
-#Folder next to this script
-#_folder = os.path.dirname(os.path.abspath(__file__))
-#_data = os.path.join(_folder, "jaxon_data")
+st.markdown("""
+    <style>
+    .stApp {
+        background: linear-gradient(135deg, #d4b896 0%, #c4a882 100%);
+    }
+    .block-container {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
-#def read_script(filepath):
-#    try:
-#        with open(filepath, "r", encoding="utf-8") as f:
-#            return f.read()
-#    except Exception:
-#        return ""
+@st.cache_data
+def load_data():
+    return pd.read_csv("data/raw_data.csv")
 
-#loading data to keep it consistent
-df = pd.read_csv("data/raw_data.csv")
+df = load_data()
 
-st.header("Jaxon's Findings")
+st.title("ASUCD Pantry Outreach and Inventory Satisfaction Analysis")
+st.write("*The effectiveness of outreach methods and the influence of inventory on patron satisfaction*")
+
+st.markdown("""
+Outreach is very important to the Pantry's mission, so analyzing the effectiveness of our outreach methods is crucial to improving
+recruitment and understanding how to reach more patrons.
+We used a Chi-Square test to analyze the relationship between volunteer/patron roles and how they discovered the Pantry.
+Another question we found important to answer is how to improve patron satisfaction via the item selection.
+We also used a Spearman test to analyze the relationship between satisfaction with the item selection and the number of unique items grabbed.
+""")
+
+st.divider()
+
+# Summary metrics
+total = len(df)
+volunteers = (df['Are you a volunteer or a patron?'].str.strip().str.title() == 'Volunteer').sum()
+patrons = (df['Are you a volunteer or a patron?'].str.strip().str.title() == 'Patron').sum()
+
+m1, m2, m3 = st.columns(3)
+m1.metric("Total Responses", total)
+m2.metric("Volunteers", int(volunteers))
+m3.metric("Patrons", int(patrons))
+
+st.divider()
 
 # Chi-Square ================================================================
-st.subheader("Chi-Square Test")
-st.write("Association between volunteer/patron roles and how they found the pantry.")
+st.header("Chi-Square Test")
+
+st.markdown("""
+**Research question:** Is there a statistically significant relationship between a person's role (volunteer vs. patron) and how they first discovered the Pantry?
+
+Volunteers and patrons are recruited through very different pipelines — volunteers often hear about opportunities through formal channels like club fairs or direct recruiting, while patrons may rely more on word of mouth or campus resources. If these two groups discover the Pantry through meaningfully different methods, the Pantry could tailor its outreach strategy to each audience more effectively.
+
+We used a **Chi-Square test of independence** because both variables are categorical: role (volunteer or patron) and discovery method (social media, friends, tabling event, etc.). The Chi-Square test tells us whether the distribution of discovery methods differs significantly between the two groups, or whether any difference we see is just due to chance.
+""")
+
+st.divider()
 
 st.subheader("Data")
 #replicating what clean.py did originially 
@@ -60,8 +98,8 @@ cleaned_df['role'] = cleaned_df['role'].str.strip().str.title()
 df1 = cleaned_df.copy()
 df1.columns = ['Role', 'Discovery_Method']
 
-#df1 = pd.read_csv(os.path.join(_data, "cleanq1data.csv"))
-st.dataframe(df1, height=400, use_container_width=True)
+with st.expander("Show Raw Data"):
+    st.dataframe(df1, height=300, use_container_width=True)
 
 
 #st.subheader("Data Cleaning Script")
@@ -121,6 +159,38 @@ df1.columns = ['Role', 'Discovery_Method']
 
 
 
+st.subheader("Filter by Role")
+role_filter = st.selectbox("Filter by role:", ["All", "Volunteer", "Patron"])
+
+if role_filter == "All":
+    df1_filtered = df1
+else:
+    df1_filtered = df1[df1['Role'] == role_filter]
+
+# Bar chart of discovery methods
+st.subheader("Discovery Methods")
+col_chart, col_info = st.columns([2, 1])
+
+with col_chart:
+    method_counts = df1_filtered['Discovery_Method'].value_counts()
+    fig, ax = plt.subplots(figsize=(6, 4))
+    fig.patch.set_facecolor('white')
+    ax.set_facecolor('white')
+    method_counts.plot(kind='bar', ax=ax, color='#8B6914', edgecolor='white')
+    ax.set_xlabel("Discovery Method")
+    ax.set_ylabel("Count")
+    ax.set_title(f"How {'Everyone' if role_filter == 'All' else role_filter + 's'} Found the Pantry")
+    plt.xticks(rotation=35, ha='right')
+    plt.tight_layout()
+    sns.despine()
+    st.pyplot(fig)
+
+with col_info:
+    st.write("**Top discovery method:**")
+    st.info(f"**{method_counts.index[0]}** ({method_counts.iloc[0]} responses)")
+    st.write("**Total responses shown:**")
+    st.metric("", len(df1_filtered))
+
 #mushed together this section so it makes more sense
 st.subheader("Data Analysis and Results")
 with st.expander("Data Analysis Script:"):
@@ -147,27 +217,41 @@ print(f"P-value: {p}")
 print(f"Degrees of Freedom: {dof}")
 
 """)
-    
-#tbl = pd.crosstab(df1.iloc[:, 0], df1.iloc[:, 1])
-#rewrote so it still works 
+
 tbl = pd.crosstab(df1['Role'], df1['Discovery_Method'])
-st.dataframe(tbl.T, use_container_width=True)
+with st.expander("Show Contingency Table"):
+    st.dataframe(tbl.T, use_container_width=True)
 
 chi2, p, dof, _ = chi2_contingency(tbl)
-st.write(f"Chi-Squared: {chi2:.4f}  |  P-value: {p:.4f}  |  Degrees of Freedom: {dof}")
+c1, c2, c3 = st.columns(3)
+c1.metric("Chi-Squared", f"{chi2:.4f}")
+c2.metric("P-value", f"{p:.4f}")
+c3.metric("Degrees of Freedom", dof)
 
 st.subheader("Analysis")
-st.write(
-    """
-- Since the p-value is less than 0.05, there is a strong association between whether someone is a volunteer or patron and how they found out about the Pantry.
-"""
-)
+if p < 0.05:
+    st.success("Since the p-value is less than 0.05, there is a strong association between whether someone is a volunteer or patron and how they found out about the Pantry.")
+else:
+    st.info("The p-value is greater than 0.05 — no statistically significant association detected.")
 
-st.markdown("---")
+st.markdown("""
+The data tells a clear story: **volunteers and patrons do not find the Pantry the same way**. This isn't just a statistical result — it reflects the reality that these two groups have very different relationships with the Pantry and are likely reached through completely different networks.
+
+For the Pantry, this means a one-size-fits-all outreach approach would be inefficient. **Patron outreach** should lean into the channels that already work for that group — word of mouth, campus resource fairs, and peer networks. **Volunteer recruitment** may benefit more from targeted efforts through club directories, class announcements, or formal campus involvement programs. Understanding where each group comes from lets the Pantry put its outreach energy in the right places.
+""")
+
+st.divider()
 
 # Spearman
-st.subheader("Spearman Test")
-st.write("Correlation between satisfaction with item selection and number of unique items grabbed.")
+st.header("Spearman Test")
+
+st.markdown("""
+**Research question:** Is there a correlation between how satisfied a patron is with the item selection and how many unique items they grab during a visit?
+
+Intuitively, a patron who is happier with what's available should be more likely to pick up a wider variety of items. If this is true, improving the item selection wouldn't just boost satisfaction scores — it would translate directly into patrons taking more food home, which is the core mission of the Pantry.
+
+We used a **Spearman rank correlation** rather than Pearson because the "items grabbed" variable is ordinal (respondents chose from ranges like "1-2 items", "3-5 items", etc.) rather than a precise count. Spearman is designed for exactly this kind of ranked data and doesn't assume a linear relationship between the two variables.
+""")
 
 st.subheader("Data")
 #again just rewritten for consistency + replicating what clean.py and cleanclean.py did for spearman
@@ -189,8 +273,9 @@ cleaned_df['items_grabbed_ordinal'] = cleaned_df[items_grabbed_col].map(itemmap)
 #again no exporting just use and keep here
 df2 = cleaned_df[['satisfaction_rating', 'items_grabbed_ordinal']].dropna()
 
-#st.subheader("Data Cleaning Script")
-#st.code(read_script(os.path.join(_data, "cleanclean.py")), language="python")
+with st.expander("Show Raw Data"):
+    st.dataframe(df2, height=300, use_container_width=True)
+
 with st.expander("Show Data Cleaning Script:"):
     st.code("""
 import pandas as pd
@@ -237,11 +322,85 @@ print(f"P-value: {p_value}")
             """)
 
 rho, pval = spearmanr(df2["satisfaction_rating"], df2["items_grabbed_ordinal"])
-st.write(f"Correlation (ρ): {rho:.4f}  |  P-value: {pval:.4f}")
+
+#big change
+
+sp1, sp2 = st.columns(2)
+sp1.metric("Correlation (ρ)", f"{rho:.4f}")
+sp2.metric("P-value", f"{pval:.4f}")
+
+st.subheader("Visualize the Relationship")
+
+sat_filter = st.slider(
+    "Filter by minimum satisfaction rating:",
+    min_value=int(df2['satisfaction_rating'].min()),
+    max_value=int(df2['satisfaction_rating'].max()),
+    value=int(df2['satisfaction_rating'].min())
+)
+
+df2_filtered = df2[df2['satisfaction_rating'] >= sat_filter]
+
+item_label_map = {1: '1-2 items', 2: '3-5 items', 3: '6-10 items', 4: '10+ items'}
+df2_plot = df2_filtered.copy()
+df2_plot['items_label'] = df2_plot['items_grabbed_ordinal'].map(item_label_map)
+
+col_scatter, col_bar = st.columns(2)
+
+with col_scatter:
+    fig2, ax2 = plt.subplots(figsize=(5, 4))
+    fig2.patch.set_facecolor('white')
+    ax2.set_facecolor('white')
+    sns.stripplot(
+        data=df2_plot,
+        x='satisfaction_rating',
+        y='items_grabbed_ordinal',
+        jitter=0.2,
+        alpha=0.5,
+        color='#8B6914',
+        ax=ax2
+    )
+    ax2.set_xlabel("Satisfaction Rating (1-5)")
+    ax2.set_ylabel("Items Grabbed (ordinal)")
+    ax2.set_yticks([1, 2, 3, 4])
+    ax2.set_yticklabels(['1-2', '3-5', '6-10', '10+'])
+    ax2.set_title("Satisfaction vs. Items Grabbed")
+    sns.despine()
+    st.pyplot(fig2)
+
+with col_bar:
+    fig3, ax3 = plt.subplots(figsize=(5, 4))
+    fig3.patch.set_facecolor('white')
+    ax3.set_facecolor('white')
+    avg_items = df2_plot.groupby('satisfaction_rating')['items_grabbed_ordinal'].mean()
+    avg_items.plot(kind='bar', ax=ax3, color='#c4a882', edgecolor='white')
+    ax3.set_xlabel("Satisfaction Rating")
+    ax3.set_ylabel("Avg. Items Grabbed (ordinal)")
+    ax3.set_title("Avg. Items Grabbed by Satisfaction")
+    plt.xticks(rotation=0)
+    sns.despine()
+    st.pyplot(fig3)
 
 st.subheader("Analysis")
-st.write(
-    """
-- Since the p-value is greater than 0.05, there is no statistically significant correlation between satisfaction of item selection and the number of unique items grabbed.
-"""
-)
+if pval < 0.05:
+    st.success(f"The p-value is less than 0.05 — there **is** a statistically significant correlation (ρ = {rho:.4f}) between satisfaction and items grabbed.")
+else:
+    st.info(f"Since the p-value ({pval:.4f}) is greater than 0.05, there is **no statistically significant correlation** between satisfaction of item selection and the number of unique items grabbed.")
+
+st.markdown("""
+The result here is perhaps the more surprising finding: **satisfaction with the item selection does not significantly predict how many unique items a patron grabs**. Patrons tend to grab a similar number of items regardless of how satisfied they are with what's available.
+
+This suggests that the number of items a patron takes is likely driven by other factors — personal need, time constraints, or simply habit — rather than by how much they like the selection. While improving item quality and variety is still worthwhile for overall experience, the Pantry should not expect it alone to increase the volume of food patrons take home. Other interventions, such as better signage, guided browsing, or awareness campaigns about what's available, may be more effective at increasing how much patrons actually take.
+""")
+
+st.divider()
+
+st.header("Conclusion")
+st.markdown("""
+Together, these two findings give the Pantry a more nuanced picture of how it operates and where it can improve.
+
+On the **outreach side**, the data confirms that volunteers and patrons are genuinely different audiences who discover the Pantry through different means. Targeted, role-specific outreach strategies will be more effective than broad, general campaigns.
+
+On the **inventory side**, satisfaction with items does not drive how much patrons take home — meaning the Pantry cannot rely on stocking better items alone to increase food distribution. Behavioral and awareness-based interventions may be needed alongside inventory improvements.
+
+The Pantry is doing meaningful work, and these findings point toward smarter, more targeted ways to grow its reach and deepen its impact on the students it serves.
+""")
