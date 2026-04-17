@@ -230,7 +230,7 @@ c3.metric("Degrees of Freedom", dof)
 
 st.subheader("Analysis")
 if p < 0.05:
-    st.success("Since the p-value is less than 0.05, there is a strong association between whether someone is a volunteer or patron and how they found out about the Pantry.")
+    st.info("Since the p-value is less than 0.05, there is a strong association between whether someone is a volunteer or patron and how they found out about the Pantry.")
 else:
     st.info("The p-value is greater than 0.05 — no statistically significant association detected.")
 
@@ -380,7 +380,7 @@ with col_bar:
 
 st.subheader("Analysis")
 if pval < 0.05:
-    st.success(f"The p-value is less than 0.05 — there **is** a statistically significant correlation (ρ = {rho:.4f}) between satisfaction and items grabbed.")
+    st.info(f"The p-value is less than 0.05 — there **is** a statistically significant correlation (ρ = {rho:.4f}) between satisfaction and items grabbed.")
 else:
     st.info(f"Since the p-value ({pval:.4f}) is greater than 0.05, there is **no statistically significant correlation** between satisfaction of item selection and the number of unique items grabbed.")
 
