@@ -3,20 +3,20 @@ import streamlit as st
 import pandas as pd
 from scipy.stats import chi2_contingency
 
-st.markdown("""
+
 st.markdown("""
 <style>
-# Main app background 
+/* Main app background */
 [data-testid="stAppViewContainer"] {
     background-color: #f7f9fc;
 }
 
-# Text styling 
+/* Text styling */
 h1, h2, h3 {
     color: #2c3e50;
 }
 
-# Add subtle padding + cleaner look 
+/* Add subtle padding + cleaner look */
 .block-container {
     padding-top: 2rem;
     padding-bottom: 2rem;
@@ -48,7 +48,7 @@ they **rarely or never find the produce they need** at the Pantry?
 
 st.markdown("---")
 
-#clean data
+# clean data
 df = pd.read_csv("data/raw_data.csv")
 
 df_patrons = df[df['Are you a volunteer or a patron?'] == 'Patron'].copy()
@@ -100,6 +100,8 @@ df_clean['asian_label'] = df_clean['asian'].map({1: 'Asian', 0: 'Non-Asian'})
     """, language="python")
 
 #st.code(read_script(os.path.join(_data, "clean_script.py")), language="python")
+
+
 
 
 
