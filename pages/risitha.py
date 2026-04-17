@@ -8,7 +8,7 @@ st.markdown("""
 <style>
 /* Main app background image */
 [data-testid="stAppViewContainer"] {
-    background-image: url("https://wallpapers.com/images/hd/fruit-background-8356qyvypvu3u0cp.jpg");
+    background-image: url("https://clipart-library.com/2024/fruit-backgrounds/fruit-backgrounds-1.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
