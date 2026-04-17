@@ -23,9 +23,6 @@ section.main > div {
     margin: auto;
 }
 
-html, body, [class*="css"]  {
-    color: black !important;
-}
 
 /* Headings */
 h1, h2, h3 {
