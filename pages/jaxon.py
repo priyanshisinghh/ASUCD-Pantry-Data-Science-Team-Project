@@ -49,15 +49,15 @@ m3.metric("Patrons", int(patrons))
 
 st.divider()
 
-# Chi-Square ================================================================
+# Chi-Square intro
 st.header("Chi-Square Test")
 
 st.markdown("""
 **Research question:** Is there a statistically significant relationship between a person's role (volunteer vs. patron) and how they first discovered the Pantry?
 
-Volunteers and patrons are recruited through very different pipelines — volunteers often hear about opportunities through formal channels like club fairs or direct recruiting, while patrons may rely more on word of mouth or campus resources. If these two groups discover the Pantry through meaningfully different methods, the Pantry could tailor its outreach strategy to each audience more effectively.
+If volunteers and patrons discover the Pantry through meaningfully different methods, the Pantry could tailor its outreach strategy to each audience more effectively. In addition, understanding which methods are more or less effective in general will help the Pantry focus its outreach efforts more effectively.
 
-We used a **Chi-Square test of independence** because both variables are categorical: role (volunteer or patron) and discovery method (social media, friends, tabling event, etc.). The Chi-Square test tells us whether the distribution of discovery methods differs significantly between the two groups, or whether any difference we see is just due to chance.
+We used a Chi-Square test of independence because both variables are categorical: role (volunteer or patron) and discovery method (social media, friends, etc.). The Chi-Square test tells us whether the discovery methods differs significantly between the two groups, or whether any difference between the two is due to chance.
 """)
 
 st.divider()
@@ -235,9 +235,9 @@ else:
     st.info("The p-value is greater than 0.05 — no statistically significant association detected.")
 
 st.markdown("""
-The data tells a clear story: **volunteers and patrons do not find the Pantry the same way**. This isn't just a statistical result — it reflects the reality that these two groups have very different relationships with the Pantry and are likely reached through completely different networks.
+The Chi-Square test reveals that volunteers and patrons do not generally find the Pantry the same way.
 
-For the Pantry, this means a one-size-fits-all outreach approach would be inefficient. **Patron outreach** should lean into the channels that already work for that group — word of mouth, campus resource fairs, and peer networks. **Volunteer recruitment** may benefit more from targeted efforts through club directories, class announcements, or formal campus involvement programs. Understanding where each group comes from lets the Pantry put its outreach energy in the right places.
+For the Pantry, this means that outreach should be approached differently for each group. Patron outreach should lean into things that work like campus resource fairs. Volunteer recruitment may benefit more from targeted efforts like class announcements or formal campus involvement programs.
 """)
 
 st.divider()
@@ -248,9 +248,7 @@ st.header("Spearman Test")
 st.markdown("""
 **Research question:** Is there a correlation between how satisfied a patron is with the item selection and how many unique items they grab during a visit?
 
-Intuitively, a patron who is happier with what's available should be more likely to pick up a wider variety of items. If this is true, improving the item selection wouldn't just boost satisfaction scores — it would translate directly into patrons taking more food home, which is the core mission of the Pantry.
-
-We used a **Spearman rank correlation** rather than Pearson because the "items grabbed" variable is ordinal (respondents chose from ranges like "1-2 items", "3-5 items", etc.) rather than a precise count. Spearman is designed for exactly this kind of ranked data and doesn't assume a linear relationship between the two variables.
+We used a Spearman rank correlation because the "items grabbed" variable is ordinal (respondents chose from ranges like "1-2 items", "3-5 items", etc.) rather than a precise count. Spearman is designed for ranked data and doesn't assume a linear relationship between the two variables.
 """)
 
 st.subheader("Data")
@@ -387,20 +385,18 @@ else:
     st.info(f"Since the p-value ({pval:.4f}) is greater than 0.05, there is **no statistically significant correlation** between satisfaction of item selection and the number of unique items grabbed.")
 
 st.markdown("""
-The result here is perhaps the more surprising finding: **satisfaction with the item selection does not significantly predict how many unique items a patron grabs**. Patrons tend to grab a similar number of items regardless of how satisfied they are with what's available.
+Satisfaction with the item selection does not predict how many unique items a patron grabs. Patrons tend to grab a similar number of items regardless of how satisfied they are with what's available.
 
-This suggests that the number of items a patron takes is likely driven by other factors — personal need, time constraints, or simply habit — rather than by how much they like the selection. While improving item quality and variety is still worthwhile for overall experience, the Pantry should not expect it alone to increase the volume of food patrons take home. Other interventions, such as better signage, guided browsing, or awareness campaigns about what's available, may be more effective at increasing how much patrons actually take.
+This suggests that the number of items a patron takes is likely driven by other factors (possibly personal need), rather than by how much they like the selection. While improving item quality and variety is still important for overall experience, the Pantry should not expect it alone to increase the volume of food patrons take home.
 """)
 
 st.divider()
 
 st.header("Conclusion")
 st.markdown("""
-Together, these two findings give the Pantry a more nuanced picture of how it operates and where it can improve.
+Both findings provide a better idea of what contributes to the Pantry's success.
 
-On the **outreach side**, the data confirms that volunteers and patrons are genuinely different audiences who discover the Pantry through different means. Targeted, role-specific outreach strategies will be more effective than broad, general campaigns.
+For outreach, the data confirms that volunteers and patrons are different audiences who discover the Pantry through different means. Targeted, strategies will be more effective than broad campaigns.
 
-On the **inventory side**, satisfaction with items does not drive how much patrons take home — meaning the Pantry cannot rely on stocking better items alone to increase food distribution. Behavioral and awareness-based interventions may be needed alongside inventory improvements.
-
-The Pantry is doing meaningful work, and these findings point toward smarter, more targeted ways to grow its reach and deepen its impact on the students it serves.
+For inventory, satisfaction with items does not drive how much patrons take home, meaning that stocking better items alone to increase food distribution.
 """)
