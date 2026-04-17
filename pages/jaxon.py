@@ -15,6 +15,12 @@ st.markdown("""
         padding-top: 2rem;
         padding-bottom: 2rem;
     }
+    details summary {
+        color: black !important;
+    }
+    details {
+        border-color: black !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
