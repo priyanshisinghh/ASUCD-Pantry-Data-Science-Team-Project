@@ -24,21 +24,35 @@ section.main > div {
 }
 
 
-section.main p, 
-section.main li, 
+/* Regular text */
+section.main p,
+section.main li,
+section.main span,
 section.main label {
-    color: #000000 !important;
+    color: black !important;
 }
 
-/* Headings */
-h1, h2, h3 {
-    color: #000000 !important;
+/* Dropdown LABEL (the text above box) */
+label {
+    color: white !important;
 }
 
-/* Keep dropdown readable */
-[data-testid="stSelectbox"] div {
-    color: #FFFFFF !important;
+/* Dropdown SELECTED VALUE (inside the box) */
+[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
+    color: white !important;
 }
+
+/* Dropdown background */
+[data-testid="stSelectbox"] div[data-baseweb="select"] {
+    background-color: black !important;
+    border-radius: 8px;
+}
+
+
+[data-baseweb="menu"] div {
+    color: black !important;
+}
+
 
 code {
     color: inherit !important;
