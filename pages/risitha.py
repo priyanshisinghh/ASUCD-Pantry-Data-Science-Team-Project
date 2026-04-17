@@ -16,9 +16,11 @@ st.markdown("""
 
 /* Make main content readable (white overlay) */
 section.main > div {
-    background-color: rgba(255, 255, 255, 0.85);
-    padding: 20px;
-    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.95);  
+    padding: 30px;
+    border-radius: 16px;
+    max-width: 1100px;
+    margin: auto;
 }
 
 /* Optional text styling */
