@@ -127,7 +127,7 @@ which can make the chi-square result less reliable.
     else:
         st.success("""
     The p-value is greater than 0.05, meaning there is no statistically significant relationship
-    between the selected demographic group and difficulty finding produce.
+    between Race and difficulty finding produce.
     """)
 
 elif analysis_type == "Asian vs. Non-Asian":
@@ -146,7 +146,7 @@ and makes the statistical test more valid.
     else:
         st.success("""
     The p-value is greater than 0.05, meaning there is no statistically significant relationship
-    between the selected demographic group and difficulty finding produce.
+    between the Asian vs. Non-Asian group and difficulty finding produce.
     """)
 
 else:
@@ -165,7 +165,7 @@ This grouping also improves statistical validity by ensuring sufficient sample s
     else:
         st.success("""
     The p-value is greater than 0.05, meaning there is no statistically significant relationship
-    between the selected demographic group and difficulty finding produce.
+    between Ethnicity and difficulty finding produce.
     """)
 
 
@@ -179,20 +179,14 @@ st.subheader("Interpretation")
 
 if p < 0.05:
     st.error("""
-There is a statistically significant relationship between the selected demographic group
-and difficulty finding produce.
+Based on the visualization and chi-square p-value result being < 0.5, 
+there exists a relationship between the selected group and difficulty finding produce.
 """)
 else:
     st.success("""
-No statistically significant relationship was detected between the selected demographic group
-and difficulty finding produce.
-""")
+Based on the visualization and chi-square p-value result being > 0.5, 
+there exists a relationship between the selected group and difficulty finding produce.
 
-st.write("""
-This does not necessarily mean disparities do not exist.  
-This analysis focuses on general produce availability and may not capture culturally specific food needs.
-
-Future surveys could better address this by asking directly about culturally relevant foods.
 """)
 
 
