@@ -32,8 +32,8 @@ h1, h2, h3 {
     color: black !important;
 }
 
-/* Paragraphs + labels */
-p, div, span, label {
+/* Paragraphs */
+p, div, span {
     color: black !important;
 }
 
@@ -42,11 +42,14 @@ p, div, span, label {
 """, unsafe_allow_html=True)
 
 # title
-st.title("Student Demographics and the Frequency of Finding Produce at The Pantry?")
+st.title("Student Demographics and the Frequency of Finding Produce at The Pantry")
 st.write("""
 Access to fresh food is essential for student health and well-being. At The Pantry, students rely on available produce to meet their nutritional needs.
 
-But an important question that we want to analyze is:
+At UC Davis, the undergraduate population is highly diverse, with approximately 35.8% identifying as Asian American and 27.3% as Hispanic/Latino. 
+These demographics highlight the importance of ensuring that food resources are accessible and meet the needs of all student groups.
+
+Given this context, an important question that we want to analyze is:
 
 **Do all students have the same experience finding the produce they need?**
 """)
@@ -97,9 +100,24 @@ df_clean['ethnicity_label'] = df_clean['ethnicity'].apply(
 
 
 st.subheader("Cleaned Dataset")
+st.write("""
+### What is this dataset?
+
+To better understand student experiences at The Pantry, we conducted a survey asking students about their demographics and how often they are able to find the produce they need.
+
+The original dataset contains these raw survey responses.  
+Before analyzing it, we “clean” the data to make it easier to work with and ensure accurate results.
+
+The table below shows the cleaned version of the data that is used for analysis.
+""")
 st.dataframe(df_clean[['race','ethnicity','produce_availability','rare_never']])
 
-with st.expander("Cleaning Script"):
+with st.expander("How was the data cleaned?"):
+    st.write("""
+This section shows the actual code used to prepare the data for analysis.
+This makes the data easier to analyze and allow us to run statistical tests like the chi-square test.
+
+""")
     st.code("""
     df = pd.read_csv("data/raw_data.csv")
 df_patrons = df[df['Are you a volunteer or a patron?'] == 'Patron'].copy()
