@@ -102,27 +102,71 @@ chi2, p, dof, expected = chi2_contingency(table)
 st.write("### Contingency Table")
 st.dataframe(table)
 
-
 # RESULTS
 st.write(f"Chi-Square: {chi2:.4f}")
 st.write(f"P-value: {p:.4f}")
 st.write(f"Degrees of Freedom: {dof}")
 
+#interpretation by selection
+st.subheader("What This Means")
 
-# EXPECTED COUNTS + HIGHLIGHT
-expected_df = pd.DataFrame(expected, index=table.index, columns=table.columns)
+if analysis_type == "Race":
+    st.write("""
+This test compares multiple race categories to see whether some groups report
+difficulty finding produce more often than others.
 
-def highlight_small(val):
-    return "background-color: #ffcccc" if val < 5 else ""
+Because there are many race categories, some groups may have very small sample sizes,
+which can make the chi-square result less reliable.
+""")
+    # significance result
+    if p < 0.05:
+        st.error("""
+    The p-value is less than 0.05, which means there is a statistically significant relationship
+    between the selected demographic group and difficulty finding produce.
+    """)
+    else:
+        st.success("""
+    The p-value is greater than 0.05, meaning there is no statistically significant relationship
+    between the selected demographic group and difficulty finding produce.
+    """)
 
-st.subheader("Expected Counts (highlighted if < 5)")
-st.write(expected_df.style.applymap(highlight_small))
+elif analysis_type == "Asian vs. Non-Asian":
+    st.write("""
+This test simplifies the data into two groups: Asian and Non-Asian.
 
-# assumption check
-if (expected_df < 5).any().any():
-    st.warning("Some expected counts are below 5 → Chi-square assumptions may be violated.")
+This helps ensure that group sizes are large enough for a more reliable comparison
+and makes the statistical test more valid.
+""")
+        # significance result
+    if p < 0.05:
+        st.error("""
+    The p-value is less than 0.05, which means there is a statistically significant relationship
+    between the selected demographic group and difficulty finding produce.
+    """)
+    else:
+        st.success("""
+    The p-value is greater than 0.05, meaning there is no statistically significant relationship
+    between the selected demographic group and difficulty finding produce.
+    """)
+
 else:
-    st.success("All expected counts ≥ 5 → Chi-square assumptions satisfied.")
+    st.write("""
+This test compares Hispanic vs. Non-Hispanic students to examine whether ethnicity
+is associated with difficulty finding produce.
+
+This grouping also improves statistical validity by ensuring sufficient sample sizes.
+""")
+    # significance result
+    if p < 0.05:
+        st.error("""
+    The p-value is less than 0.05, which means there is a statistically significant relationship
+    between the selected demographic group and difficulty finding produce.
+    """)
+    else:
+        st.success("""
+    The p-value is greater than 0.05, meaning there is no statistically significant relationship
+    between the selected demographic group and difficulty finding produce.
+    """)
 
 
 # VISUALIZATION
