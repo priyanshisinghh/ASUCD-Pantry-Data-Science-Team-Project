@@ -27,17 +27,17 @@ section.main > div {
 section.main p, 
 section.main li, 
 section.main label {
-    color: #2c3e50 !important;
+    color: black !important;
 }
 
 /* Headings */
 h1, h2, h3 {
-    color: #1f2d3d !important;
+    color: black !important;
 }
 
 /* Keep dropdown readable */
 [data-testid="stSelectbox"] div {
-    color: black !important;
+    color: #2c3e50 !important;
 }
 
 code {
