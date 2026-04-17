@@ -8,7 +8,7 @@ st.markdown("""
 <style>
 /* Main app background image */
 [data-testid="stAppViewContainer"] {
-    background-image: url("https://media.istockphoto.com/id/2186511897/vector/seamless-pattern-of-ripe-orange-mandarins-fruit-green-leaves-watercolor-hand-drawn-vector.jpg?s=612x612&w=0&k=20&c=sUiqXGR9Vs4QvjNbI6fk4j8jfqoj8WTTZkFQzcO8HQ4=");
+    background-image: url("https://static.vecteezy.com/system/resources/previews/016/178/694/non_2x/fruit-seamless-pattern-with-whole-and-sliced-oranges-on-a-beige-background-free-vector.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
