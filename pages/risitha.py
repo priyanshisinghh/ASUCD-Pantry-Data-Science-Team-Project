@@ -4,23 +4,33 @@ import pandas as pd
 from scipy.stats import chi2_contingency
 
 st.markdown("""
+st.markdown("""
 <style>
-body {
+# Main app background 
+[data-testid="stAppViewContainer"] {
     background-color: #f7f9fc;
 }
+
+# Text styling 
 h1, h2, h3 {
     color: #2c3e50;
+}
+
+# Add subtle padding + cleaner look 
+.block-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
 </style>
 """, unsafe_allow_html=True)
 
 # title
-st.title("Is There a Relationship Between Student Demographics and the Frequency of Finding Fresh Produce at The Pantry?")
+st.title("Is There a Relationship Between Student Demographics and the Frequency of Finding Produce at The Pantry?")
 st.write("""
-Access to fresh food is essential for student health and well-being.  
-At The Pantry, students rely on available produce to meet their nutritional needs.
+Access to fresh food is essential for student health and well-being. At The Pantry, students rely on available produce to meet their nutritional needs.
 
 But an important question that we want to analyze is:
+
 **Do all students have the same experience finding the produce they need?**
 """)
 
@@ -72,6 +82,27 @@ df_clean['ethnicity_label'] = df_clean['ethnicity'].apply(
 st.subheader("Cleaned Dataset")
 st.dataframe(df_clean[['race','ethnicity','produce_availability','rare_never']])
 
+with st.expander("Cleaning Script"):
+    st.code("""
+    df = pd.read_csv("data/raw_data.csv")
+df_patrons = df[df['Are you a volunteer or a patron?'] == 'Patron'].copy()
+df_patrons = df_patrons.rename(columns={
+    'What is your ethnicity?': 'ethnicity',
+    'What is your race? [Choose all that apply]': 'race',
+    'How often do you find the produce you need? ': 'produce_availability'
+})
+df_clean = df_patrons.dropna(subset=['produce_availability']).copy()
+df_clean['rare_never'] = df_clean['produce_availability'].apply(
+    lambda x: 1 if str(x).strip() in ['Rarely', 'Never'] else 0
+)
+df_clean['asian'] = df_clean['race'].apply(lambda x: 1 if 'Asian' in str(x) else 0)
+df_clean['asian_label'] = df_clean['asian'].map({1: 'Asian', 0: 'Non-Asian'})
+    """, language="python")
+
+#st.code(read_script(os.path.join(_data, "clean_script.py")), language="python")
+
+
+
 # user selection
 st.markdown("---")
 st.subheader("Interactive Analysis")
@@ -101,6 +132,7 @@ chi2, p, dof, expected = chi2_contingency(table)
 
 st.write("### Contingency Table")
 st.dataframe(table)
+st.caption("Counts represent number of students in each category.")
 
 # RESULTS
 st.write(f"Chi-Square: {chi2:.4f}")
