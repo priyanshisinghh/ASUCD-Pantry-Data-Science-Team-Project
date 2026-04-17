@@ -6,20 +6,24 @@ from scipy.stats import chi2_contingency
 
 st.markdown("""
 <style>
-/* Main app background */
+/* Main app background image */
 [data-testid="stAppViewContainer"] {
-    background-color: #9d825d;
+    background-image: url("https://media.istockphoto.com/id/2186511897/vector/seamless-pattern-of-ripe-orange-mandarins-fruit-green-leaves-watercolor-hand-drawn-vector.jpg?s=612x612&w=0&k=20&c=sUiqXGR9Vs4QvjNbI6fk4j8jfqoj8WTTZkFQzcO8HQ4=");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-/* Text styling */
+/* Make main content readable (white overlay) */
+section.main > div {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+/* Optional text styling */
 h1, h2, h3 {
     color: #2c3e50;
-}
-
-/* Add subtle padding + cleaner look */
-.block-container {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
 }
 </style>
 """, unsafe_allow_html=True)
