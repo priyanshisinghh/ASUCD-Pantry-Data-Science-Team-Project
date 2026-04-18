@@ -170,7 +170,7 @@ with col_plot:
 st.divider()
 
 #model comparison and anova testing 
-st.header("The Model Comparisons and ANOVA Tests"):
+st.header("The Model Comparisons and ANOVA Tests")
 st.markdown("""
 Our base model explains about **27.5%** of the variance in the shopping experience. Notice that when we add Gender and College to the model, the Adjusted R-Squared actually *drops*. This mathematically proves that those demographic variables are just adding noise, not predictive value.
     
