@@ -40,6 +40,13 @@ st.markdown(f"""
     }}
     details summary {{
         color: black !important;
+        background-color: white !important;
+    }}
+    details[open] > summary {{
+        background-color: white !important;
+    }}
+    details {{
+        background-color: white !important;
     }}
     </style>
 """, unsafe_allow_html=True)
