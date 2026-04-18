@@ -19,6 +19,23 @@ st.markdown(f"""
         background-position: center;
         background-attachment: fixed;
     }}
+    section.main > div {{
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 16px;
+    max-width: 1100px;
+    margin: auto;
+}}
+details summary {{
+    color: black !important;
+    background-color: white !important;
+}}
+details[open] > summary {{
+    background-color: white !important;
+}}
+details {{
+    background-color: white !important;
+}}
     </style>
 """, unsafe_allow_html=True)
 #end background content
