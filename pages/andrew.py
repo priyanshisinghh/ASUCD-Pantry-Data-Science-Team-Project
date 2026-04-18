@@ -32,7 +32,7 @@ st.markdown("""
 #loading and cleaning data
 @st.cache_data
 def load_data():
-    return pd.read_csv("pantryresponses.csv")
+    return pd.read_csv("data/raw_data.csv")
 
 cleandata = load_data()
 cleandata = cleandata.rename(columns={
