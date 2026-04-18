@@ -46,10 +46,8 @@ st.markdown(f"""
     details {{
         background-color: white !important;
     }}
-    </style>
-""", unsafe_allow_html=True)
 
-/* fix text inside expanders */
+    /* fix text inside expanders */
     details p, details div, details span, details label {{
         color: black !important;
     }}
@@ -70,6 +68,9 @@ st.markdown(f"""
         color: black !important;
         background-color: white !important;
     }}
+    
+    </style>
+""", unsafe_allow_html=True)
 
 #background end
 
