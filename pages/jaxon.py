@@ -3,26 +3,40 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.stats import chi2_contingency, spearmanr
+import base64
 
-st.set_page_config(page_title="ASUCD Pantry Outreach and Inventory Satisfaction Analysis", layout="wide")
+st.set_page_config(page_title="ASUCD Pantry Outreach and Inventory Satisfaction Analysis")
 
-st.markdown("""
+#background stuff
+def get_base64(file_path):
+    with open(file_path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+
+img = get_base64("pages/images/jaxon-bg.png")
+
+st.markdown(f"""
     <style>
-    .stApp {
-        background: linear-gradient(135deg, #d4b896 0%, #c4a882 100%);
-    }
-    .block-container {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-    }
-    details summary {
+    .stApp {{
+        background-image: url("data:image/png;base64,{img}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }}
+    [data-testid="stAppViewContainer"] {{
+        background-image: url("data:image/png;base64,{img}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }}
+    [data-testid="stHeader"] {{
+        background: rgba(0,0,0,0);
+    }}
+    details summary {{
         color: black !important;
-    }
-    details {
-        border-color: black !important;
-    }
+    }}
     </style>
 """, unsafe_allow_html=True)
+#background stuff end
 
 @st.cache_data
 def load_data():
