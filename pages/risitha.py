@@ -29,7 +29,7 @@ st.markdown(f"""
     [data-testid="stHeader"] {{
         background: rgba(0,0,0,0);
     }}
-   section.main > div {{
+    section.main > div {{
         background-color: rgba(255, 255, 255, 0.95);
         padding: 30px;
         border-radius: 16px;
@@ -46,39 +46,19 @@ st.markdown(f"""
     details {{
         background-color: white !important;
     }}
-
-    /* fix text inside expanders */
-    details p, details div, details span, details label {{
+    details p, details span, details label {{
         color: black !important;
     }}
-    
-    /* fix selectbox/dropdown */
-    /* white dropdown */
-    [data-testid="stSelectbox"] div[data-baseweb="select"] {{
+    [data-testid="stSelectbox"] {{
         background-color: white !important;
-        border: 1px solid #e6e6e6 !important;
         border-radius: 4px !important;
-    }}
-    [data-testid="stSelectbox"] div[data-baseweb="select"] div {{
-        color: black !important;
-    }}
-    [data-baseweb="menu"] {{
-        background-color: white !important;
     }}
     [data-baseweb="option"] {{
         color: black !important;
         background-color: white !important;
     }}
-
-    /* keep code blocks dark */
-    .stCodeBlock, pre, code {{
-        background-color: #1e1e1e !important;
-        color: #d4d4d4 !important;
-    }}
-    
     </style>
 """, unsafe_allow_html=True)
-
 #background end
 
 # title
