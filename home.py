@@ -1,6 +1,35 @@
 import streamlit as st
+import base64
 
-st.set_page_config(page_title="ASUCD Pantry - Data Science Team")
+st.set_page_config(page_title="ASUCD Pantry Data Science Team")
+
+#background stuff
+def get_base64(file_path):
+    with open(file_path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+
+img = get_base64("pages/images/home-bg.png")
+
+st.markdown(f"""
+    <style>
+    .stApp {{
+        background-image: url("data:image/png;base64,{img}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }}
+    [data-testid="stAppViewContainer"] {{
+        background-image: url("data:image/png;base64,{img}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }}
+    [data-testid="stHeader"] {{
+        background: rgba(0,0,0,0);
+    }}
+    </style>
+""", unsafe_allow_html=True)
+#end background stuff
 
 st.title("ASUCD Pantry")
 st.subheader("Data Science Team - Satisfaction Survey Analysis")
