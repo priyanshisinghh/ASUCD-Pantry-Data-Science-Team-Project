@@ -17,24 +17,16 @@ st.markdown(f"""
         background-image: url("data:image/png;base64,{img}");
         background-size: cover;
         background-position: center;
-        background-attachment: fixed;
+        background-repeat: no-repeat;
     }}
-    section.main > div {{
-        background-color: rgba(255, 255, 255, 0.95);
-        padding: 30px;
-        border-radius: 16px;
-        max-width: 1100px;
-        margin: auto;
+    [data-testid="stAppViewContainer"] {{
+        background-image: url("data:image/png;base64,{img}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
     }}
-    details summary {{
-        color: black !important;
-        background-color: white !important;
-    }}
-    details[open] > summary {{
-        background-color: white !important;
-    }}
-    details {{
-        background-color: white !important;
+    [data-testid="stHeader"] {{
+        background: rgba(0,0,0,0);
     }}
     </style>
 """, unsafe_allow_html=True)
