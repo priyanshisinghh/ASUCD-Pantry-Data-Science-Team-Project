@@ -4,6 +4,27 @@ import statsmodels.formula.api as smf
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+#page background
+import base64
+
+def get_base64(file_path):
+    with open(file_path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+
+img = get_base64("pages/images/andrew-bg.png")
+
+st.markdown(f"""
+    <style>
+    .stApp {{
+        background-image: url("data:image/png;base64,{img}");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }}
+    </style>
+""", unsafe_allow_html=True)
+#end background content
+
 #configuring the page and styling it
 st.set_page_config(page_title="Andrew's findings, how Shopping Experience is Impacted by Satisfaction, Gender, and Major", layout="wide")
 
