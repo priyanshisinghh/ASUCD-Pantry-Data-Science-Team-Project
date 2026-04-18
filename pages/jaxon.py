@@ -31,6 +31,13 @@ st.markdown(f"""
     [data-testid="stHeader"] {{
         background: rgba(0,0,0,0);
     }}
+    section.main > div {{
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 16px;
+        max-width: 1100px;
+        margin: auto;
+    }}
     details summary {{
         color: black !important;
     }}
