@@ -9,7 +9,7 @@ def get_base64(file_path):
     with open(file_path, "rb") as f:
         return base64.b64encode(f.read()).decode()
 
-img = get_base64("static/pri-bg.png")
+img = get_base64("pages/images/pri-bg.png")
 
 st.markdown(f"""
     <style>
