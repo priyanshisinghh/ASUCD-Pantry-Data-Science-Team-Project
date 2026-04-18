@@ -2,6 +2,27 @@ import streamlit as st
 import pandas as pd
 from scipy.stats import chi2_contingency
 
+#page background
+import base64
+
+def get_base64(file_path):
+    with open(file_path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+
+img = get_base64("static/pri-bg.png")
+
+st.markdown(f"""
+    <style>
+    .stApp {{
+        background-image: url("data:image/png;base64,{img}");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }}
+    </style>
+""", unsafe_allow_html=True)
+#end background content
+
 st.header("Pri's Findings")
 
 st.write("""
