@@ -1,66 +1,44 @@
-#import os - removed since we are not using os
 import streamlit as st
 import pandas as pd
 from scipy.stats import chi2_contingency
+import base64
 
+st.set_page_config(page_title="Risitha's Findings")
 
-st.markdown("""
-<style>
-/* Main app background image */
-[data-testid="stAppViewContainer"] {
-    background-image: url("https://i.pinimg.com/originals/65/4f/9a/654f9a4bfd715b2537a2b9e1e4220c0d.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
+#background stuff
+def get_base64(file_path):
+    with open(file_path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
 
-/* Make main content readable (white overlay) */
-section.main > div {
-    background-color: rgba(255, 255, 255, 0.95);  
-    padding: 30px;
-    border-radius: 16px;
-    max-width: 1100px;
-    margin: auto;
-}
+img = get_base64("pages/images/risitha-bg.png")
 
-
-/* Regular text */
-section.main p,
-section.main li,
-section.main span,
-section.main label {
-    color: black !important;
-}
-
-/* Dropdown LABEL (the text above box) */
-label {
-    color: black !important;
-}
-
-/* Dropdown SELECTED VALUE (inside the box) */
-[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
-    color: white !important;
-}
-
-/* Dropdown background */
-[data-testid="stSelectbox"] div[data-baseweb="select"] {
-    background-color: black !important;
-    border-radius: 8px;
-}
-
-
-[data-baseweb="menu"] div {
-    color: black !important;
-}
-
-
-code {
-    color: inherit !important;
-}
-
-
-</style>
+st.markdown(f"""
+    <style>
+    .stApp {{
+        background-image: url("data:image/png;base64,{img}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }}
+    [data-testid="stAppViewContainer"] {{
+        background-image: url("data:image/png;base64,{img}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }}
+    [data-testid="stHeader"] {{
+        background: rgba(0,0,0,0);
+    }}
+    section.main > div {{
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 16px;
+        max-width: 1100px;
+        margin: auto;
+    }}
+    </style>
 """, unsafe_allow_html=True)
+#background end
 
 # title
 st.title("Student Demographics and the Frequency of Finding Produce at The Pantry")
