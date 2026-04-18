@@ -170,44 +170,44 @@ with col_plot:
 st.divider()
 
 #model comparison and anova testing 
-with st.expander("The Model Comparisons and ANOVA Tests"):
-    st.markdown("""
-    Our base model explains about **27.5%** of the variance in the shopping experience. Notice that when we add Gender and College to the model, the Adjusted R-Squared actually *drops*. This mathematically proves that those demographic variables are just adding noise, not predictive value.
+st.header("The Model Comparisons and ANOVA Tests"):
+st.markdown("""
+Our base model explains about **27.5%** of the variance in the shopping experience. Notice that when we add Gender and College to the model, the Adjusted R-Squared actually *drops*. This mathematically proves that those demographic variables are just adding noise, not predictive value.
     
-    *The base regression equation:* y = 2.60 + 0.45x
-    """)
+*The base regression equation:* y = 2.60 + 0.45x""")
     
-    #showing the data
-    met_col1, met_col2, met_col3 = st.columns(3)
-    met_col1.metric("Model 1 (Satisfaction Only)", f"{m1.rsquared_adj:.3f}", "Baseline Adj. R²")
-    met_col2.metric("Model 2 (+ Gender)", f"{m2.rsquared_adj:.3f}", f"{(m2.rsquared_adj - m1.rsquared_adj):.3f}", delta_color="inverse")
-    met_col3.metric("Model 3 (+ College)", f"{m3.rsquared_adj:.3f}", f"{(m3.rsquared_adj - m1.rsquared_adj):.3f}", delta_color="inverse")
+#showing the data
+met_col1, met_col2, met_col3 = st.columns(3)
+met_col1.metric("Model 1 (Satisfaction Only)", f"{m1.rsquared_adj:.3f}", "Baseline Adj. R²")
+met_col2.metric("Model 2 (+ Gender)", f"{m2.rsquared_adj:.3f}", f"{(m2.rsquared_adj - m1.rsquared_adj):.3f}", delta_color="inverse")
+met_col3.metric("Model 3 (+ College)", f"{m3.rsquared_adj:.3f}", f"{(m3.rsquared_adj - m1.rsquared_adj):.3f}", delta_color="inverse")
     
-    st.write("---")
-    st.write("### Exploring Demographics")
-    st.write("Even though gender and college don't drive the overall experience, it is still helpful to see who is using the space. Our data shows more female respondents than male, heavily concentrated in the CAES and L&S colleges.")
+st.write("---")
+st.write("### Exploring Demographics")
+st.write("Even though gender and college don't drive the overall experience, it is still helpful to see who is using the space. Our data shows more female respondents than male, heavily concentrated in the CAES and L&S colleges.")
     
-    #faceted grid plot
-    g = sns.lmplot(
-        data=modeldata, 
-        x='Satisfaction', 
-        y='Experience', 
-        hue='Gender', 
-        col='College', 
-        col_wrap=2, 
-        ci=None, 
-        x_jitter=0.2, 
-        y_jitter=0.2, 
-        scatter_kws={'alpha': 0.6},
-        height=3,
-        aspect=1.2
+#faceted grid plot
+g = sns.lmplot(
+    data=modeldata, 
+    x='Satisfaction',         
+    y='Experience', 
+    hue='Gender',        
+    col='College', 
+    col_wrap=2, 
+    ci=None, 
+    x_jitter=0.2, 
+    y_jitter=0.2, 
+    scatter_kws={'alpha': 0.6},
+    height=3,
+    aspect=1.2
     )
-    #making the faceted grid transparent
-    g.fig.patch.set_facecolor('white')
-    for ax in g.axes.flatten():
-        ax.set_facecolor('white')
-        ax.tick_params(colors='black')
+    
+#making the faceted grid transparent
+g.fig.patch.set_facecolor('white')
+for ax in g.axes.flatten():
+    ax.set_facecolor('white')
+    ax.tick_params(colors='black')
         
-    g.fig.subplots_adjust(top=0.9)
-    g.fig.suptitle("Panels: College | Color: Gender | X-axis: Satisfaction")
-    st.pyplot(g.fig)
+g.fig.subplots_adjust(top=0.9)
+g.fig.suptitle("Panels: College | Color: Gender | X-axis: Satisfaction")
+st.pyplot(g.fig)
