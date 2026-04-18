@@ -3,10 +3,12 @@ import pandas as pd
 import statsmodels.formula.api as smf
 import matplotlib.pyplot as plt
 import seaborn as sns
-
-#page background
 import base64
 
+# MUST BE FIRST
+st.set_page_config(page_title="Andrew's Findings", layout="centered")
+
+# background
 def get_base64(file_path):
     with open(file_path, "rb") as f:
         return base64.b64encode(f.read()).decode()
@@ -19,36 +21,28 @@ st.markdown(f"""
         background-image: url("data:image/png;base64,{img}");
         background-size: cover;
         background-position: center;
-        background-attachment: fixed;
+        background-repeat: no-repeat;
     }}
-    </style>
-""", unsafe_allow_html=True)
-#end background content
-
-#configuring the page and styling it
-st.set_page_config(page_title="Andrew's findings, how Shopping Experience is Impacted by Satisfaction, Gender, and Major", layout="wide")
-
-st.markdown("""
-    <style>
-    /* Soft gradient background */
-    .stApp {
-        background: linear-gradient(135deg, #d4b896 0%, #c4a882 100%);
-    }
-    /* Clean up the block containers */
-    .block-container {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-    }
-    /* Styling for metric cards */
-    div[data-testid="metric-container"] {
+    [data-testid="stAppViewContainer"] {{
+        background-image: url("data:image/png;base64,{img}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }}
+    [data-testid="stHeader"] {{
+        background: rgba(0,0,0,0);
+    }}
+    div[data-testid="metric-container"] {{
         background-color: white;
         border: 1px solid #e6e6e6;
         padding: 15px;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
+    }}
     </style>
-    """, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
+
+# rest of your code unchanged...
 
 #loading and cleaning data
 @st.cache_data
