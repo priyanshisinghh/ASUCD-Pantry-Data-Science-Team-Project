@@ -48,6 +48,29 @@ st.markdown(f"""
     }}
     </style>
 """, unsafe_allow_html=True)
+
+/* fix text inside expanders */
+    details p, details div, details span, details label {{
+        color: black !important;
+    }}
+    
+    /* fix selectbox/dropdown */
+    [data-testid="stSelectbox"] div[data-baseweb="select"] > div {{
+        color: black !important;
+        background-color: white !important;
+    }}
+    [data-testid="stSelectbox"] div[data-baseweb="select"] {{
+        background-color: white !important;
+        border-color: #e6e6e6 !important;
+    }}
+    [data-baseweb="menu"] {{
+        background-color: white !important;
+    }}
+    [data-baseweb="menu"] div {{
+        color: black !important;
+        background-color: white !important;
+    }}
+
 #background end
 
 # title
