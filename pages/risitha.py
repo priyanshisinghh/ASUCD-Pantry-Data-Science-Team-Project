@@ -53,20 +53,27 @@ st.markdown(f"""
     }}
     
     /* fix selectbox/dropdown */
-    [data-testid="stSelectbox"] div[data-baseweb="select"] > div {{
-        color: black !important;
-        background-color: white !important;
-    }}
+    /* white dropdown */
     [data-testid="stSelectbox"] div[data-baseweb="select"] {{
         background-color: white !important;
-        border-color: #e6e6e6 !important;
+        border: 1px solid #e6e6e6 !important;
+        border-radius: 4px !important;
+    }}
+    [data-testid="stSelectbox"] div[data-baseweb="select"] div {{
+        color: black !important;
     }}
     [data-baseweb="menu"] {{
         background-color: white !important;
     }}
-    [data-baseweb="menu"] div {{
+    [data-baseweb="option"] {{
         color: black !important;
         background-color: white !important;
+    }}
+
+    /* keep code blocks dark */
+    .stCodeBlock, pre, code {{
+        background-color: #1e1e1e !important;
+        color: #d4d4d4 !important;
     }}
     
     </style>
