@@ -32,12 +32,22 @@ st.markdown(f"""
     [data-testid="stHeader"] {{
         background: rgba(0,0,0,0);
     }}
-    div[data-testid="metric-container"] {{
-        background-color: white;
-        border: 1px solid #e6e6e6;
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    section.main > div {{
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 16px;
+        max-width: 1100px;
+        margin: auto;
+    }}
+    details summary {{
+        color: black !important;
+        background-color: white !important;
+    }}
+    details[open] > summary {{
+        background-color: white !important;
+    }}
+    details {{
+        background-color: white !important;
     }}
     </style>
 """, unsafe_allow_html=True)
