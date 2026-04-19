@@ -200,3 +200,6 @@ for ax in g.axes.flatten():
 g.fig.subplots_adjust(top=0.9)
 g.fig.suptitle("Panels: College | Color: Gender | X-axis: Satisfaction")
 st.pyplot(g.fig)
+
+st.markdown("---")
+st.caption("ASUCD Pantry Data Science Team · UC Davis · 2025-2026")
