@@ -409,6 +409,21 @@ This suggests that the number of items a patron takes is likely driven by other 
 
 st.divider()
 
+st.header("What This Means...")
+st.write("""
+Together, these two findings give the Pantry a clearer picture of where to focus:
+
+**For outreach,** volunteers and patrons are different audiences who find the Pantry 
+through different channels. We found that broad campaigns are less effective than targeted ones,
+thus suggesting that patron outreach should lean into campus resource fairs and word of mouth. 
+Volunteer recruitment benefits more from class announcements and campus involvement programs compared
+to other methods of outreach.
+
+**For inventory,** since satisfaction with items doesn't predict how much patrons take home, 
+simply stocking more items won't automatically increase food distribution. The focus should 
+be on stocking items patrons actually want. This can be found on the item request page. 
+""")
+
 st.header("Conclusion")
 st.markdown("""
 Both findings provide a better idea of what contributes to the Pantry's success.
