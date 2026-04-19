@@ -432,3 +432,6 @@ For outreach, the data confirms that volunteers and patrons are different audien
 
 For inventory, satisfaction with items does not drive how much patrons take home, meaning that stocking better items alone to increase food distribution.
 """)
+
+st.markdown("---")
+st.caption("ASUCD Pantry Data Science Team · UC Davis · 2025-2026")
