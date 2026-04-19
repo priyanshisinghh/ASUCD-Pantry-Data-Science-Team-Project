@@ -3,7 +3,6 @@ import base64
 
 st.set_page_config(page_title="ASUCD Pantry Data Science Team")
 
-#background stuff
 def get_base64(file_path):
     with open(file_path, "rb") as f:
         return base64.b64encode(f.read()).decode()
@@ -29,10 +28,38 @@ st.markdown(f"""
     }}
     </style>
 """, unsafe_allow_html=True)
-#end background stuff
 
 st.title("ASUCD Pantry")
-st.subheader("Data Science Team - Satisfaction Survey Analysis")
+st.subheader("Data Science Team — Satisfaction Survey Analysis")
+
+st.markdown("---")
+
+# Key findings upfront
+st.header("What We Found")
+st.write("We surveyed UC Davis students who use the Pantry. Here are the top takeaways:")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.info("""
+    🛒 **Item satisfaction drives experience**
+    
+    How happy patrons are with the item selection is the #1 predictor of their overall shopping experience — not their gender or college.
+    """)
+
+with col2:
+    st.info("""
+    📣 **Outreach works differently for different groups**
+    
+    Volunteers and patrons discover the Pantry through very different channels. Targeted outreach will be more effective than broad campaigns.
+    """)
+
+with col3:
+    st.info("""
+    🥦 **Demographics don't predict produce access**
+    
+    No significant difference was found between racial or ethnic groups in how often they find the produce they need.
+    """)
 
 st.markdown("---")
 
@@ -47,18 +74,35 @@ st.markdown("---")
 
 st.header("About This Project")
 st.write("""
-This site was created by the ASUCD Pantry Data Science Team. Our goal was to better understand 
-the experiences of students who use the Pantry by designing and distributing a satisfaction survey. 
-Through this project we explored:
+This site was created by the ASUCD Pantry Data Science Team. We designed and distributed a satisfaction 
+survey to better understand the experiences of students who use the Pantry. Through this project we explored:
 """)
 
-st.write("""
-- How satisfied students are with the Pantry's services, hours, and offerings
-- What barriers students face when accessing the Pantry
-- How the Pantry can better serve the UC Davis community
-- Trends in usage and student feedback over time
-""")
-
-st.info("Click on the sidebar to see each member's findings and analysis")
+col_a, col_b = st.columns(2)
+with col_a:
+    st.write("""
+    - How satisfied students are with the Pantry's services and offerings
+    - What types of items students want more of
+    """)
+with col_b:
+    st.write("""
+    - Whether demographics affect access to produce
+    - What drives a good overall shopping experience
+    """)
 
 st.markdown("---")
+
+st.header("How to Use This Site")
+st.write("""
+Use the **sidebar on the left** to explore each team member's analysis. You don't need any stats 
+background — each page explains its findings in plain English with interactive tools you can play with.
+""")
+
+col1, col2, col3, col4 = st.columns(4)
+col1.success("🛍️ **Shopping Experience**\nAndrew's analysis")
+col2.success("📣 **Outreach & Inventory**\nJaxon's analysis")
+col3.success("🥗 **Item Requests**\nPri's analysis")
+col4.success("👥 **Demographics**\nRisitha's analysis")
+
+st.markdown("---")
+st.caption("ASUCD Pantry Data Science Team · UC Davis · 2024-2025")
