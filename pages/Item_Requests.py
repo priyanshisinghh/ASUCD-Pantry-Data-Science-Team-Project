@@ -35,17 +35,15 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 st.title("Item Requests & Produce Availability")
-st.write("*Analysis by Pri*")
 
 st.markdown("---")
 
 st.header("The Big Question")
 st.write("""
 When patrons struggle to find produce at the Pantry, are they more likely to be 
-looking for specific types of items — like snacks, fruits, or protein?
+looking for specific types of items such as snacks, fruits, or protein?
 
-If certain item types are consistently harder to find, that's a signal for what 
-the Pantry should prioritize stocking.
+If we can identify certain item types that are consistently harder to find, we can identify which items the Pantry should consider prioritizing stocking.
 """)
 
 st.markdown("---")
@@ -56,14 +54,15 @@ We used a statistical test called a **Chi-Square test**. Here's what that means 
 
 Imagine splitting all survey respondents into two groups:
 - People who said they **want more snacks** at the Pantry
-- People who said they **don't need more snacks**
+- And the people who said they **don't need more snacks**
 
 Then we ask: do these two groups report finding produce at different rates?
 
 If yes → there's a real pattern worth paying attention to.
+
 If no → it's probably just random variation in the data.
 
-We ran this test separately for three item categories: **Fruits/Vegetables**, **Snacks**, and **Protein (Eggs/Tofu)**.
+We ran this test separately for three differentitem categories: **Fruits/Vegetables**, **Snacks**, and **Protein (Eggs/Tofu)**.
 """)
 
 with st.expander("Show the full list of item categories in the survey"):
@@ -131,10 +130,10 @@ st.markdown("---")
 # --- Key finding upfront ---
 st.header("The Key Finding")
 st.success("""
-✅ **Snacks** is the only item category where a statistically significant pattern was found.
+Between all the different categories, **snacks** is the only item category where a statistically significant pattern was found.
 
 Patrons who want more snacks report finding produce less often than patrons who don't 
-request more snacks. This suggests snack-seekers may feel the Pantry's overall selection 
+request more snacks, suggesting that these patrons may feel the Pantry's overall selection 
 doesn't meet their needs.
 """)
 
@@ -188,7 +187,7 @@ chi2, p, dof, _ = chi2_contingency(tbl)
 st.write(f"**Chi-Squared:** {chi2:.4f} | **P-value:** {p:.4f} | **Degrees of Freedom:** {dof}")
 
 if p < 0.05:
-    st.success(f"✅ There IS a statistically significant association between wanting more **{selected}** and produce availability (p < 0.05). This pattern is unlikely to be due to chance.")
+    st.success(f"There IS a statistically significant association between wanting more **{selected}** and produce availability (p < 0.05). This pattern is unlikely to be due to chance.")
 else:
     st.info(f"No statistically significant association found for **{selected}** (p ≥ 0.05). The difference between groups is likely due to random variation.")
 
@@ -206,7 +205,7 @@ for label in CATEGORIES.keys():
         'Item Category': label,
         'Chi-Squared': round(chi2, 4),
         'P-value': round(p, 4),
-        'Significant?': '✅ Yes' if p < 0.05 else 'No'
+        'Significant?': 'YES!' if p < 0.05 else 'No'
     })
 
 results_df = pd.DataFrame(results)
@@ -214,17 +213,17 @@ st.dataframe(results_df, use_container_width=True, hide_index=True)
 
 st.markdown("---")
 
-st.header("What This Means for the Pantry")
+st.header("What This Means...)
 st.write("""
 Out of all the item categories tested, **Snacks** stood out as the only one with a 
 statistically significant relationship to produce availability. 
 
-In practical terms: patrons who are looking for more snacks tend to also struggle 
-more with finding produce. This could mean that this group of patrons finds the 
+This means that patrons who are looking for more snacks tend to also struggle 
+more with finding produce, potentially suggesting that this group of patrons finds the 
 Pantry's overall selection less aligned with what they're looking for — not just in 
 one category, but more broadly.
 
-**Recommended action:** The Pantry could consider expanding its snack offerings and 
+**Potential Action Items:** The Pantry could consider expanding its snack offerings and 
 surveying snack-seeking patrons more directly to understand what specific items would 
 make the biggest difference.
 """)
@@ -238,6 +237,6 @@ produce availability differently. Most categories showed no significant pattern,
 but snack-seekers stood out as a group worth paying more attention to.
 
 Future surveys could ask more specifically about snack preferences and whether 
-current snack offerings feel adequate — which would help the Pantry make more 
+current snack offerings feel adequate, which would help the Pantry make more 
 targeted stocking decisions.
 """)
