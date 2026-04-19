@@ -62,7 +62,7 @@ If yes → there's a real pattern worth paying attention to.
 
 If no → it's probably just random variation in the data.
 
-We ran this test separately for three differentitem categories: **Fruits/Vegetables**, **Snacks**, and **Protein (Eggs/Tofu)**.
+We ran this test separately for three different item categories: **Fruits/Vegetables**, **Snacks**, and **Protein (Eggs/Tofu)**.
 """)
 
 with st.expander("Show the full list of item categories in the survey"):
