@@ -213,7 +213,7 @@ st.dataframe(results_df, use_container_width=True, hide_index=True)
 
 st.markdown("---")
 
-st.header("What This Means...)
+st.header("What This Means...")
 st.write("""
 Out of all the item categories tested, **Snacks** stood out as the only one with a 
 statistically significant relationship to produce availability. 
