@@ -240,3 +240,6 @@ Future surveys could ask more specifically about snack preferences and whether
 current snack offerings feel adequate, which would help the Pantry make more 
 targeted stocking decisions.
 """)
+
+st.markdown("---")
+st.caption("ASUCD Pantry Data Science Team · UC Davis · 2025-2026")
