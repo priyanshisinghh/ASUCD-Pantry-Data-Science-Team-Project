@@ -96,20 +96,26 @@ with st.form("prediction_form"):
     submitted = st.form_submit_button("Predict the Overall Shopping Experience!")
 
 if submitted:
-    #creates a dataframe with whatever the person inputs
     input_df = pd.DataFrame({
         'Satisfaction': [user_sat],
         'Gender': [user_gender],
         'College': [user_college]
     })
     
-    #predicts using m3 (which was the most complex model)
     prediction = m3.predict(input_df).iloc[0]
-    
-    #stops the prediction from going over 5, since that is the max score
     prediction = min(prediction, 5.0)
     
     st.info(f"### Predicted Overall Experience: **{prediction:.2f} / 5.00**")
+    
+    # plain english interpretation
+    if prediction >= 4.5:
+        st.success("This predicts an **excellent** shopping experience!")
+    elif prediction >= 3.5:
+        st.success("This predicts a **good** shopping experience.")
+    elif prediction >= 2.5:
+        st.warning("This predicts an **average** shopping experience. Improving item satisfaction could help.")
+    else:
+        st.error("This predicts a **below average** shopping experience. Item satisfaction is the key lever to improve this.")
 
 st.divider()
 
