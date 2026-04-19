@@ -44,12 +44,12 @@ with col1:
     st.info("""
     🛒 **Item satisfaction drives experience**
     
-    How happy patrons are with the item selection is the #1 predictor of their overall shopping experience — not their gender or college.
+    How happy patrons are with the item selection is the best predictor of their overall shopping experience.
     """)
 
 with col2:
     st.info("""
-    📣 **Outreach works differently for different groups**
+    📣 **Outreach works differently for volunteers versus patrons**
     
     Volunteers and patrons discover the Pantry through very different channels. Targeted outreach will be more effective than broad campaigns.
     """)
@@ -105,4 +105,4 @@ col3.success("🥗 **Item Requests**\nPri's analysis")
 col4.success("👥 **Demographics**\nRisitha's analysis")
 
 st.markdown("---")
-st.caption("ASUCD Pantry Data Science Team · UC Davis · 2024-2025")
+st.caption("ASUCD Pantry Data Science Team · UC Davis · 2025-2026")
