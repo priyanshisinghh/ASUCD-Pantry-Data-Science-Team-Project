@@ -424,14 +424,5 @@ simply stocking more items won't automatically increase food distribution. The f
 be on stocking items patrons actually want. This can be found on the item request page. 
 """)
 
-st.header("Conclusion")
-st.markdown("""
-Both findings provide a better idea of what contributes to the Pantry's success.
-
-For outreach, the data confirms that volunteers and patrons are different audiences who discover the Pantry through different means. Targeted, strategies will be more effective than broad campaigns.
-
-For inventory, satisfaction with items does not drive how much patrons take home, meaning that stocking better items alone to increase food distribution.
-""")
-
 st.markdown("---")
 st.caption("ASUCD Pantry Data Science Team · UC Davis · 2025-2026")
