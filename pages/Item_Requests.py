@@ -32,7 +32,8 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 #end background content
 
-st.header("Pri's Findings")
+st.title("Item Requests & Produce Availability")
+st.write("*Priyanshi Singh*")
 
 st.write("""
 ### Research Question
