@@ -269,3 +269,6 @@ specific food availability, enabling a more comprehensive evaluation of whether 
 meeting the diverse dietary and cultural needs of its patrons.
 
 """)
+
+st.markdown("---")
+st.caption("ASUCD Pantry Data Science Team · UC Davis · 2025-2026")
